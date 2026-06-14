@@ -2277,6 +2277,10 @@ body.dark-theme .form-control {
     color: #fff !important;
     border-color: rgba(255, 255, 255, 0.12) !important;
 }
+body.dark-theme .form-control option {
+    background: #15151f !important;
+    color: #ffffff !important;
+}
 body.dark-theme .toast {
     background: rgba(15, 15, 22, 0.9) !important;
     color: #fff !important;
@@ -2789,6 +2793,10 @@ body:not(.dark-theme) .form-control {
     background: #ffffff !important;
     color: var(--dark-gray) !important;
     border: 1px solid var(--border) !important;
+}
+body:not(.dark-theme) .form-control option {
+    background: #ffffff !important;
+    color: #333333 !important;
 }
 body:not(.dark-theme) .form-control:focus {
     border-color: var(--primary-yellow) !important;
