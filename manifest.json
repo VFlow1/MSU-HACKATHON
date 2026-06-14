@@ -1,6 +1,6 @@
 {
-  "name": "AI-Driven Task & Learning Management Ecosystem",
-  "short_name": "AI-Talent",
+  "name": "TalentSphere",
+  "short_name": "TalentSphere",
   "description": "ระบบบริหารงานและพัฒนาบุคลากรขับเคลื่อนด้วย AI",
   "start_url": "./ai-talent-dashboard.html",
   "display": "standalone",
