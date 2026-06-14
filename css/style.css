@@ -2326,3 +2326,153 @@ body.dark-theme .settings-status-box {
     color: rgba(255,255,255,0.8) !important;
 }
 
+/* ==========================================================================
+   MOBILE RESPONSIVENESS ENHANCEMENTS
+   Optimizes dashboard layout on mobile screens without affecting desktop view
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .breadcrumb {
+        display: none !important; /* Hide breadcrumb on tablets and mobile to save height */
+    }
+}
+
+@media (max-width: 600px) {
+    /* 2-column KPI grid for clean compact dashboard layout */
+    .kpi-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+        margin-bottom: 16px !important;
+    }
+    .kpi-card {
+        padding: 12px 14px !important;
+    }
+    .kpi-value {
+        font-size: 20px !important;
+        margin-bottom: 2px !important;
+    }
+    .kpi-label {
+        font-size: 11px !important;
+    }
+    .kpi-header {
+        margin-bottom: 6px !important;
+    }
+    .kpi-icon-wrapper svg {
+        width: 38px !important;
+        height: 38px !important;
+    }
+    .kpi-icon-wrapper svg circle {
+        cx: 19 !important;
+        cy: 19 !important;
+        r: 16 !important;
+    }
+    .kpi-icon {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 14px !important;
+        border-radius: 6px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    /* Topbar Layout stacking in 2 rows */
+    .topbar {
+        padding: 10px 12px !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+    }
+    .topbar-left {
+        width: 100% !important;
+        justify-content: space-between !important;
+        gap: 10px !important;
+    }
+    .topbar-right {
+        width: 100% !important;
+        justify-content: space-between !important;
+        gap: 8px !important;
+    }
+    .topbar-right .search-box {
+        flex: 1 !important;
+    }
+    .topbar-right .search-box input {
+        width: 100% !important;
+    }
+    .topbar-btn {
+        width: 36px !important;
+        height: 36px !important;
+        flex-shrink: 0 !important;
+    }
+    
+    /* AI Banner vertical layout */
+    .ai-banner {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+        padding: 16px !important;
+    }
+    .ai-actions {
+        width: 100% !important;
+        justify-content: flex-start !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+    .ai-actions .btn {
+        padding: 8px 16px !important;
+        font-size: 12px !important;
+        flex: 1 !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+    .ai-icon {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 18px !important;
+    }
+    
+    /* Table controls stacking */
+    .table-header {
+        width: 100% !important;
+        align-items: stretch !important;
+    }
+    .table-tools {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        width: 100% !important;
+        gap: 8px !important;
+    }
+    .table-tools .search-input {
+        width: 100% !important;
+        flex: none !important;
+    }
+    .table-tools .filter-select {
+        width: 100% !important;
+    }
+    
+    /* Modals sizing */
+    .modal-content {
+        padding: 20px !important;
+        width: 95% !important;
+        max-width: 95% !important;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Compact content padding */
+    .content-area {
+        padding: 10px !important;
+    }
+    
+    /* Stack detail cards lists */
+    .detail-row {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 4px !important;
+        padding: 8px 0 !important;
+    }
+    
+    /* Chart padding reduction */
+    .chart-card {
+        padding: 16px !important;
+    }
+}
