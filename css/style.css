@@ -2586,11 +2586,11 @@ body:not(.dark-theme) .kpi-card,
 body:not(.dark-theme) .chart-card,
 body:not(.dark-theme) .table-card,
 body:not(.dark-theme) .detail-card {
-    background: #ffffff !important;
-    border: 1px solid var(--border) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
+    background: rgba(255, 255, 255, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.65) !important;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.04) !important;
+    backdrop-filter: blur(24px) saturate(1.4) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(1.4) !important;
 }
 body:not(.dark-theme) .kpi-value {
     color: var(--dark-gray) !important;
@@ -2679,6 +2679,37 @@ body:not(.dark-theme) .ai-suggestion-box {
 }
 body:not(.dark-theme) .ai-suggestion-box .suggestion-text {
     color: var(--dark-gray) !important;
+}
+
+/* Reports in light theme */
+body:not(.dark-theme) .report-paper {
+    background: rgba(255, 255, 255, 0.55) !important;
+    backdrop-filter: blur(24px) saturate(1.4) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(1.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.65) !important;
+    color: var(--dark-gray) !important;
+}
+body:not(.dark-theme) .report-paper h2,
+body:not(.dark-theme) .report-paper h3,
+body:not(.dark-theme) .report-paper h4 {
+    color: var(--dark-gray) !important;
+}
+body:not(.dark-theme) .report-kpi-card {
+    background: rgba(255, 255, 255, 0.45) !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+body:not(.dark-theme) .report-table th {
+    background: rgba(0, 0, 0, 0.03) !important;
+    color: var(--medium-gray) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+body:not(.dark-theme) .report-table td {
+    border-bottom-color: rgba(0, 0, 0, 0.05) !important;
+    color: var(--dark-gray) !important;
+}
+body:not(.dark-theme) .report-bulletin {
+    background: rgba(212, 160, 23, 0.08) !important;
+    color: var(--primary-yellow-dark) !important;
 }
 
 /* Detail view in light theme */
