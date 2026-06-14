@@ -2483,46 +2483,74 @@ body.dark-theme .settings-status-box {
    ========================================================================== */
 
 body:not(.dark-theme) {
-    background: #ffffff !important;
+    background: #f5f6fa !important; /* Premium light gray backdrop behind WebGL canvas */
     color: var(--dark-gray) !important;
 }
 
-body:not(.dark-theme) #glass-bg-canvas {
-    display: none !important;
-}
-
-/* Sidebar in light theme (solid premium dark sidebar) */
+/* Sidebar in light theme (white frosted glass sidebar) */
 body:not(.dark-theme) .sidebar {
-    background: var(--dark-gray) !important;
-    border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05) !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
+    background: rgba(255, 255, 255, 0.45) !important;
+    border-right: 1px solid rgba(0, 0, 0, 0.05) !important;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.03) !important;
+    backdrop-filter: blur(30px) saturate(1.6) !important;
+    -webkit-backdrop-filter: blur(30px) saturate(1.6) !important;
+}
+body:not(.dark-theme) .nav-item {
+    color: rgba(0, 0, 0, 0.6) !important;
+}
+body:not(.dark-theme) .nav-item:hover, 
+body:not(.dark-theme) .nav-item.active {
+    color: #000000 !important;
+    background: rgba(212, 160, 23, 0.15) !important;
+}
+body:not(.dark-theme) .nav-item i {
+    color: rgba(0, 0, 0, 0.6) !important;
+}
+body:not(.dark-theme) .nav-item:hover i, 
+body:not(.dark-theme) .nav-item.active i {
+    color: var(--primary-yellow-dark) !important;
+}
+body:not(.dark-theme) .nav-section-title {
+    color: rgba(0, 0, 0, 0.35) !important;
+}
+body:not(.dark-theme) .logo-text {
+    color: #000000 !important;
+}
+body:not(.dark-theme) .logo-icon {
+    background: var(--primary-yellow) !important;
+    color: #000000 !important;
 }
 body:not(.dark-theme) .sidebar-footer {
-    background: #222222 !important;
-    border-top-color: rgba(255, 255, 255, 0.05) !important;
-    backdrop-filter: none !important;
+    background: rgba(255, 255, 255, 0.6) !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+    backdrop-filter: blur(30px) saturate(1.6) !important;
+    -webkit-backdrop-filter: blur(30px) saturate(1.6) !important;
+}
+body:not(.dark-theme) .sidebar-footer .user-profile span {
+    color: rgba(0, 0, 0, 0.6) !important;
+}
+body:not(.dark-theme) .sidebar-footer .user-profile strong {
+    color: #000000 !important;
 }
 body:not(.dark-theme) .sidebar-header {
     background: transparent !important;
-    border-bottom-color: rgba(255, 255, 255, 0.05) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
 }
 @media (min-width: 769px) {
     body:not(.dark-theme) .sidebar::after {
-        background: var(--dark-gray) !important;
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        background: rgba(255, 255, 255, 0.45) !important;
+        backdrop-filter: blur(30px) saturate(1.6) !important;
+        -webkit-backdrop-filter: blur(30px) saturate(1.6) !important;
+        border: 1px solid rgba(0, 0, 0, 0.05) !important;
     }
 }
 
 /* Topbar in light theme */
 body:not(.dark-theme) .topbar {
-    background: #ffffff !important;
-    border-bottom: 1px solid var(--border) !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
+    background: rgba(255, 255, 255, 0.45) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+    backdrop-filter: blur(24px) saturate(1.4) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(1.4) !important;
 }
 body:not(.dark-theme) .page-title {
     color: var(--dark-gray) !important;
@@ -2531,9 +2559,9 @@ body:not(.dark-theme) .breadcrumb {
     color: var(--medium-gray) !important;
 }
 body:not(.dark-theme) .search-box input {
-    background: var(--bg-gray) !important;
-    border: 1px solid var(--border) !important;
-    color: var(--dark-gray) !important;
+    background: rgba(0, 0, 0, 0.04) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    color: #000000 !important;
 }
 body:not(.dark-theme) .search-box input::placeholder {
     color: var(--medium-gray) !important;
@@ -2543,12 +2571,12 @@ body:not(.dark-theme) .search-box i {
     color: var(--medium-gray) !important;
 }
 body:not(.dark-theme) .topbar-btn {
-    background: #ffffff !important;
-    border: 1px solid var(--border) !important;
-    color: var(--medium-gray) !important;
+    background: rgba(255, 255, 255, 0.6) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    color: rgba(0, 0, 0, 0.6) !important;
 }
 body:not(.dark-theme) .topbar-btn:hover {
-    background: var(--primary-yellow-light) !important;
+    background: rgba(212, 160, 23, 0.15) !important;
     color: var(--primary-yellow-dark) !important;
     border-color: var(--primary-yellow) !important;
 }
@@ -2679,31 +2707,32 @@ body:not(.dark-theme) .timeline-text {
 
 /* Chat window in light theme */
 body:not(.dark-theme) .ai-chat-window {
-    background: #ffffff !important;
-    border: 1px solid var(--border) !important;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1) !important;
-    backdrop-filter: none !important;
+    background: rgba(255, 255, 255, 0.75) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08) !important;
+    backdrop-filter: blur(36px) saturate(1.6) !important;
+    -webkit-backdrop-filter: blur(36px) saturate(1.6) !important;
 }
 body:not(.dark-theme) .ai-chat-header {
-    background: var(--bg-gray) !important;
-    border-bottom: 1px solid var(--border) !important;
+    background: rgba(0, 0, 0, 0.02) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 body:not(.dark-theme) .ai-chat-header h3 {
     color: var(--dark-gray) !important;
 }
 body:not(.dark-theme) .chat-message.ai {
-    background: var(--bg-gray) !important;
+    background: rgba(0, 0, 0, 0.04) !important;
     color: var(--dark-gray) !important;
-    border: 1px solid var(--border) !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
 }
 body:not(.dark-theme) .ai-chat-input-area {
-    background: #ffffff !important;
-    border-top: 1px solid var(--border) !important;
+    background: rgba(255, 255, 255, 0.5) !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 body:not(.dark-theme) .ai-chat-input-area input {
-    background: var(--bg-gray) !important;
+    background: rgba(0, 0, 0, 0.04) !important;
     color: var(--dark-gray) !important;
-    border: 1px solid var(--border) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 body:not(.dark-theme) .suggestion-chip {
     background: #ffffff !important;
@@ -2716,10 +2745,11 @@ body:not(.dark-theme) .suggestion-chip:hover {
 
 /* Modals in light theme */
 body:not(.dark-theme) .modal-content {
-    background: #ffffff !important;
-    border: 1px solid var(--border) !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
-    backdrop-filter: none !important;
+    background: rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.1) !important;
+    backdrop-filter: blur(36px) saturate(1.6) !important;
+    -webkit-backdrop-filter: blur(36px) saturate(1.6) !important;
 }
 body:not(.dark-theme) .modal-title {
     color: var(--dark-gray) !important;
@@ -2735,14 +2765,15 @@ body:not(.dark-theme) .form-control:focus {
 
 /* Ticker in light theme */
 body:not(.dark-theme) .activity-ticker-container {
-    background: #ffffff !important;
-    border: 1px solid var(--border) !important;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03) !important;
-    backdrop-filter: none !important;
+    background: rgba(255, 255, 255, 0.6) !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02) !important;
+    backdrop-filter: blur(20px) saturate(1.4) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(1.4) !important;
 }
 body:not(.dark-theme) .ticker-title {
     color: var(--dark-gray) !important;
-    border-right-color: var(--border) !important;
+    border-right: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 body:not(.dark-theme) .ticker-item {
     color: var(--medium-gray) !important;
@@ -2750,16 +2781,16 @@ body:not(.dark-theme) .ticker-item {
 
 /* Agent steps in light theme */
 body:not(.dark-theme) .agent-step {
-    background: var(--bg-gray) !important;
-    border: 1px solid var(--border) !important;
+    background: rgba(0, 0, 0, 0.03) !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
 }
 body:not(.dark-theme) .agent-step.active {
-    border-color: var(--primary-yellow) !important;
-    background: var(--primary-yellow-light) !important;
+    border-color: rgba(212, 160, 23, 0.4) !important;
+    background: rgba(212, 160, 23, 0.06) !important;
 }
 body:not(.dark-theme) .agent-step.completed {
-    border-color: var(--success) !important;
-    background: #E8F5E9 !important;
+    border-color: rgba(76, 175, 80, 0.3) !important;
+    background: rgba(76, 175, 80, 0.05) !important;
 }
 body:not(.dark-theme) .step-title {
     color: var(--dark-gray) !important;
@@ -2774,11 +2805,15 @@ body:not(.dark-theme) .agent-step.pending .step-icon {
 
 /* Agent idea cards in light theme */
 body:not(.dark-theme) .agent-idea-card {
-    background: #ffffff !important;
-    border: 1px solid var(--border) !important;
+    background: rgba(255, 255, 255, 0.45) !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
 }
 body:not(.dark-theme) .agent-idea-card:hover {
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08) !important;
+    background: rgba(255, 255, 255, 0.65) !important;
+    border-color: rgba(212, 160, 23, 0.35) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05) !important;
 }
 body:not(.dark-theme) .idea-title {
     color: var(--dark-gray) !important;
@@ -2790,13 +2825,13 @@ body:not(.dark-theme) .idea-meta-item strong {
     color: var(--dark-gray) !important;
 }
 body:not(.dark-theme) .idea-details-grid {
-    border-top-color: var(--border) !important;
+    border-top-color: rgba(0, 0, 0, 0.06) !important;
 }
 
 /* Settings elements in light theme */
 body:not(.dark-theme) .settings-status-box {
-    background: var(--bg-gray) !important;
-    border-color: var(--border) !important;
+    background: rgba(0, 0, 0, 0.03) !important;
+    border-color: rgba(0, 0, 0, 0.06) !important;
     color: var(--dark-gray) !important;
 }
 body:not(.dark-theme) .slider {
