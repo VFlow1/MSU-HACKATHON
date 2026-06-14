@@ -56,7 +56,7 @@ self.addEventListener('fetch', event => {
         }
         return fetch(event.request).then(response => {
           // Cache newly fetched local items dynamically
-          if (response && response.status === 200) {
+          if (response && response.status === 200 && !event.request.url.includes('/api/')) {
             const responseClone = response.clone();
             caches.open(CACHE_NAME).then(cache => {
               cache.put(event.request, responseClone);
