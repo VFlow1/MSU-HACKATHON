@@ -1211,6 +1211,21 @@ async function sendAIChatMessage() {
 function generateAIResponse(query) {
     const q = query.toLowerCase();
     
+    // Check if asking about completed tasks (and not LMS course completion which is handled below)
+    if ((q.includes('เสร็จ') || q.includes('สำเร็จ') || q.includes('เสร็จสิ้น') || q.includes('completed')) && 
+        !(q.includes('คอร์ส') || q.includes('เรียน') || q.includes('lms'))) {
+        const completed = tasksData.filter(t => t.status === 'completed');
+        if (completed.length > 0) {
+            let response = `ขณะนี้มีงานที่เสร็จสมบูรณ์แล้วทั้งหมด <strong>${completed.length} งาน</strong> ครับ:<br><ul style="margin-left: 20px; margin-top: 8px;">`;
+            completed.forEach(t => {
+                response += `<li><strong>${t.name}</strong> - มอบหมายให้ <em>${t.assignee}</em> (ระดับความสำคัญ: ${t.priority})</li>`;
+            });
+            response += `</ul><br>คุณสามารถตรวจสอบรายละเอียดงานทั้งหมดเพิ่มเติมได้จากแท็บตารางงานครับ`;
+            return response;
+        }
+        return `ขณะนี้ในระบบยังไม่มีงานใดที่มีสถานะเสร็จสิ้นครับ`;
+    }
+    
     if (q.includes('งานเยอะ') || q.includes('งานสุด') || q.includes('ภาระ') || q.includes('งานมาก')) {
         let maxTasks = -1;
         let empList = [];
@@ -1902,8 +1917,20 @@ function buildSystemContextPrompt() {
     const pendingTasks = tasksData.filter(t => t.status === 'pending').length;
     const criticalTasks = tasksData.filter(t => t.priority === 'critical').length;
     
+    // List of completed tasks
+    let completedListStr = tasksData.filter(t => t.status === 'completed')
+        .map(t => `- งานที่เสร็จแล้ว: "${t.name}" (ผู้รับผิดชอบ: ${t.assignee}, ระดับความสำคัญ: ${t.priority})`)
+        .join('\n');
+    if (!completedListStr) completedListStr = "ไม่มีงานที่เสร็จสิ้น";
+
+    // List of in-progress tasks
+    let progressListStr = tasksData.filter(t => t.status === 'in-progress')
+        .map(t => `- งานที่กำลังทำ: "${t.name}" (ผู้รับผิดชอบ: ${t.assignee}, ความสำคัญ: ${t.priority}, ความเสี่ยง AI: ${t.aiRisk || 'ต่ำ'})`)
+        .join('\n');
+    if (!progressListStr) progressListStr = "ไม่มีงานที่กำลังทำ";
+
     let blockedListStr = tasksData.filter(t => t.status === 'blocked')
-        .map(t => `- งาน "${t.name}" มอบหมายให้ ${t.assignee} (ความเสี่ยง: ${t.aiRisk})`)
+        .map(t => `- งานที่ติดขัด: "${t.name}" มอบหมายให้ ${t.assignee} (ความเสี่ยง: ${t.aiRisk})`)
         .join('\n');
     if (!blockedListStr) blockedListStr = "ไม่มีงานที่ติดขัด";
 
@@ -1912,22 +1939,42 @@ function buildSystemContextPrompt() {
         .join('\n');
     if (!criticalListStr) criticalListStr = "ไม่มีงานวิกฤต";
 
-    const topEmployees = [...employeesData].sort((a,b) => b.performance - a.performance).slice(0, 3)
-        .map(e => `- ${e.name} (ฝ่าย: ${e.dept}, คะแนนประสิทธิภาพ: ${e.performance}/100, งานค้าง: ${e.tasks} งาน)`)
+    // List of all employees and their skills
+    const employeesStr = employeesData
+        .map(e => `- ${e.name} (ฝ่าย: ${e.dept}, ทักษะ: ${e.skills}, งานในมือ: ${e.tasks} งาน, ประสิทธิภาพ: ${e.performance}/100)`)
         .join('\n');
 
     const completedCoursesCount = coursesData.filter(c => c.status === 'completed' || c.progress === 100).length;
     const totalCoursesCount = coursesData.length;
 
-    return `คุณคือ "AI Project Manager Assistant" ผู้ช่วยอัจฉริยะในบอร์ดบริการจัดการงานและพัฒนาทักษะ (TalentSphere) ขององค์กร
-นี่คือข้อมูลจริงในระบบขณะนี้:
-- จำนวนงานทั้งหมด: ${totalTasks} งาน (เสร็จสิ้น: ${completedTasks}, กำลังทำ: ${progressTasks}, รอเริ่ม: ${pendingTasks}, ติดขัด: ${blockedTasks})
-- งานที่ติดขัด (Blocked):\n${blockedListStr}
-- งานวิกฤต (Critical):\n${criticalListStr}
-- บุคลากรระดับท็อป (คะแนนสูงสุด 3 คนแรก):\n${topEmployees}
-- ระบบการเรียนรู้ LMS: เรียนจบแล้ว ${completedCoursesCount} คอร์ส จากคอร์สทั้งหมด ${totalCoursesCount} คอร์ส
+    // List of LMS courses
+    const coursesStr = coursesData
+        .map(c => `- คอร์ส "${c.name}" (ประเภท: ${c.category}, ผู้เรียน: ${c.enrollmentsCount} คน, สถานะ: ${c.status})`)
+        .join('\n');
 
-จงใช้ข้อมูลด้านบนเพื่อตอบคำถามของผู้ใช้อย่างเป็นกันเอง มีความเป็นมืออาชีพ และตอบกลับเป็นภาษาไทยเท่านั้น หากมีข้อแนะนำด้านทักษะหรือการสลับเปลี่ยนงานให้คนเรียนจบหลักสูตร LMS ที่เหมาะสม ให้เสนอแนะอย่างสร้างสรรค์`;
+    return `คุณคือ "AI Project Manager Assistant" ผู้ช่วยอัจฉริยะของระบบบริหารงานและพัฒนาบุคลากร (TalentSphere)
+นี่คือข้อมูลจริงในระบบเรียลไทม์ขณะนี้:
+
+1. สรุปภาพรวมงาน:
+- จำนวนงานทั้งหมด: ${totalTasks} งาน (เสร็จสิ้น: ${completedTasks}, กำลังทำ: ${progressTasks}, รอเริ่ม: ${pendingTasks}, ติดขัด: ${blockedTasks})
+
+2. รายการงานที่เสร็จสิ้น (Completed Tasks):\n${completedListStr}
+
+3. รายการงานที่กำลังทำ (In-Progress Tasks):\n${progressListStr}
+
+4. รายการงานที่ติดขัด (Blocked):\n${blockedListStr}
+
+5. รายการงานวิกฤต (Critical):\n${criticalListStr}
+
+6. รายชื่อและข้อมูลบุคลากรทั้งหมด (Employees):\n${employeesStr}
+
+7. ข้อมูลระบบการเรียนรู้ออนไลน์ LMS:
+- สรุป: เรียนจบแล้ว ${completedCoursesCount} คอร์ส จากคอร์สทั้งหมด ${totalCoursesCount} คอร์ส
+- รายชื่อคอร์สทั้งหมด:\n${coursesStr}
+
+จงวิเคราะห์และตอบคำถามของผู้ใช้อย่างฉลาด มีประโยชน์ เป็นกันเอง มีความกระตือรือร้นเหมือนที่ปรึกษามืออาชีพ และตอบกลับเป็นภาษาไทยเท่านั้น 
+หากผู้ใช้ถามว่ามีงานอะไรเสร็จ หรืออยากรู้เรื่องเกี่ยวกับงานคอร์ส ให้เจาะจงรายละเอียด ชื่อผู้ทำ/ผู้เรียน และข้อมูลวิเคราะห์ตามจริงอย่างละเอียด 
+และถ้างานไหนมีปัญหา ให้แนะนำคนที่มีทักษะตรงจากการเรียน LMS มาทดแทนช่วยแก้ไขงานอย่างสร้างสรรค์`;
 }
 
 // ===== DYNAMIC AI INSIGHTS ANALYSIS =====
