@@ -2524,3 +2524,56 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
     });
 });
+
+// ===== 5. CUSTOM PWA INSTALLATION LOGIC =====
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent the mini-infobar from appearing on mobile
+    e.preventDefault();
+    // Stash the event so it can be triggered later.
+    deferredPrompt = e;
+    // Update UI notify the user they can install the PWA
+    const installBtn = document.getElementById('pwaInstallBtn');
+    if (installBtn) {
+        installBtn.style.display = 'inline-flex';
+        installBtn.classList.add('pulse-glow');
+    }
+});
+
+function triggerPwaInstall() {
+    const installBtn = document.getElementById('pwaInstallBtn');
+    if (!deferredPrompt) return;
+    
+    // Hide our custom button
+    if (installBtn) installBtn.style.display = 'none';
+    
+    // Show the install prompt
+    deferredPrompt.prompt();
+    
+    // Wait for the user to respond to the prompt
+    deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the PWA install prompt');
+            if (typeof triggerConfetti === 'function') {
+                triggerConfetti();
+            }
+            if (typeof playSuccess === 'function') {
+                playSuccess();
+            }
+            showToast("ขอบคุณสำหรับการติดตั้งแอปพลิเคชัน!", "success");
+        } else {
+            console.log('User dismissed the PWA install prompt');
+            // Re-show the button if they dismissed it
+            if (installBtn) installBtn.style.display = 'inline-flex';
+        }
+        deferredPrompt = null;
+    });
+}
+
+window.addEventListener('appinstalled', (e) => {
+    deferredPrompt = null;
+    const installBtn = document.getElementById('pwaInstallBtn');
+    if (installBtn) installBtn.style.display = 'none';
+    showToast("แอปพลิเคชัน TalentSphere ติดตั้งสำเร็จแล้ว!", "success");
+});
