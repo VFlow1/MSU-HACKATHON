@@ -1,4 +1,4 @@
-# 🚀 AI-Driven Task & Learning Management Ecosystem
+# 🚀 TalentSphere AI Ecosystem
 
 **ระบบบริหารงานและพัฒนาบุคลากรขับเคลื่อนด้วย AI อัจฉริยะ**  
 *ผลงานส่งเข้าประกวด Hackathon Challenge: The "Living" App (48 Hours)*
