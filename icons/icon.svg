@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="100" fill="#0c0c12"/>
+  <!-- Glowing gold circle background -->
+  <circle cx="256" cy="256" r="180" fill="none" stroke="#D4A017" stroke-width="4" stroke-opacity="0.3"/>
+  <circle cx="256" cy="256" r="220" fill="none" stroke="#D4A017" stroke-width="1" stroke-opacity="0.1"/>
+  <!-- Golden Brain Icon -->
+  <g fill="none" stroke="#D4A017" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Left Hemisphere -->
+    <path d="M256,120 C210,120 160,140 160,195 C160,220 180,240 170,265 C160,285 130,295 130,325 C130,370 175,400 220,400 C235,400 245,395 256,380" />
+    <path d="M210,180 C185,180 185,210 200,225" />
+    <path d="M190,280 C165,280 165,310 190,325" />
+    <path d="M220,325 C210,345 220,365 240,365" />
+    <!-- Right Hemisphere -->
+    <path d="M256,120 C302,120 352,140 352,195 C352,220 332,240 342,265 C352,285 382,295 382,325 C382,370 337,400 292,400 C277,400 267,395 256,380" />
+    <path d="M302,180 C327,180 327,210 312,225" />
+    <path d="M322,280 C347,280 347,310 322,325" />
+    <path d="M292,325 C302,345 292,365 272,365" />
+    <!-- Center glowing line / connection -->
+    <line x1="256" y1="130" x2="256" y2="370" stroke-dasharray="10, 15" stroke-opacity="0.8"/>
+  </g>
+</svg>
