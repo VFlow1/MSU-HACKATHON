@@ -3064,4 +3064,30 @@ body:not(.dark-theme) .item-time {
     color: var(--medium-gray) !important;
 }
 
+/* ==========================================================================
+   CHROME OPTION DROPDOWN BUG FIX
+   Forces native selects to use solid background to prevent transparent/white-on-white text in Chrome
+   ========================================================================== */
+body.dark-theme select.form-control,
+body.dark-theme select.filter-select {
+    background-color: #151522 !important;
+    color: #ffffff !important;
+}
+body.dark-theme select.form-control option,
+body.dark-theme select.filter-select option {
+    background-color: #151522 !important;
+    color: #ffffff !important;
+}
+
+body:not(.dark-theme) select.form-control,
+body:not(.dark-theme) select.filter-select {
+    background-color: #ffffff !important;
+    color: #333333 !important;
+}
+body:not(.dark-theme) select.form-control option,
+body:not(.dark-theme) select.filter-select option {
+    background-color: #ffffff !important;
+    color: #333333 !important;
+}
+
 
