@@ -274,23 +274,27 @@ function initTiltCards() {
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
             
-            // Calculate tilt angle (max 6 degrees)
-            const rotateY = ((x - centerX) / centerX) * 6;
-            const rotateX = -((y - centerY) / centerY) * 6;
+            // Calculate tilt angle (max 15 degrees for clear 3D perspective)
+            const rotateY = ((x - centerX) / centerX) * 15;
+            const rotateX = -((y - centerY) / centerY) * 15;
             
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+            // Disable transition for real-time cursor tracking
+            card.style.transition = 'none';
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
             
             // Position glare
             if (glare) {
                 glare.style.opacity = '1';
-                glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 80%)`;
+                glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 80%)`;
                 if (document.body.classList.contains('dark-theme')) {
-                    glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(212, 160, 23, 0.18) 0%, rgba(255,255,255,0) 80%)`;
+                    glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(212, 160, 23, 0.25) 0%, rgba(255,255,255,0) 80%)`;
                 }
             }
         });
         
         card.addEventListener('mouseleave', () => {
+            // Restore smooth transition when leaving
+            card.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s, border-color 0.3s';
             card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
             if (glare) {
                 glare.style.opacity = '0';
