@@ -92,12 +92,13 @@ const fsSource = `
       lineIntensity += (line + circle) * rand;
     }
 
-    vec4 bgColor1 = mix(vec4(0.95, 0.95, 0.97, 1.0), vec4(0.06, 0.06, 0.06, 1.0), u_dark);
-    vec4 bgColor2 = mix(vec4(1.0, 1.0, 1.0, 1.0), vec4(0.12, 0.12, 0.12, 1.0), u_dark);
+    vec4 bgColor1 = mix(vec4(0.86, 0.88, 0.92, 1.0), vec4(0.06, 0.06, 0.06, 1.0), u_dark);
+    vec4 bgColor2 = mix(vec4(0.93, 0.95, 0.97, 1.0), vec4(0.12, 0.12, 0.12, 1.0), u_dark);
 
-    vec4 bg = mix(bgColor1, bgColor2, uv.x) * verticalFade;
-    // Blend gold lines on top of background
-    fragColor = mix(bg, lineColor, min(1.0, lineIntensity * 0.55));
+    vec4 bg = mix(bgColor1, bgColor2, uv.x);
+    // Blend gold lines on top of background, fading the lines (not the bg) at the edges
+    float lineFade = verticalFade * horizontalFade;
+    fragColor = mix(bg, lineColor, min(1.0, lineIntensity * 0.55 * lineFade));
     fragColor.a = 1.0;
 
     gl_FragColor = fragColor;
