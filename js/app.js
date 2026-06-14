@@ -1089,7 +1089,6 @@ function updateThemeIcon() {
         themeBtn.setAttribute('data-tooltip', isDark ? 'สลับเป็นโหมดสว่าง' : 'สลับเป็นโหมดมืด');
     }
 }
-
 function initTheme() {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'light') {
@@ -1099,6 +1098,33 @@ function initTheme() {
     }
     updateThemeIcon();
 }
+
+// ===== TOPBAR DROPDOWN LOGIC =====
+function toggleDropdown(id) {
+    const dropdowns = ['notifDropdown', 'msgDropdown'];
+    dropdowns.forEach(dId => {
+        const d = document.getElementById(dId);
+        if (dId === id) {
+            d?.classList.toggle('show');
+            
+            // If opening notification dropdown, clear the notification dot
+            if (id === 'notifDropdown' && d?.classList.contains('show')) {
+                const dot = document.querySelector('.notif-dot');
+                if (dot) dot.style.display = 'none';
+            }
+        } else {
+            d?.classList.remove('show');
+        }
+    });
+}
+
+// Close dropdowns when clicking outside
+window.addEventListener('click', function(e) {
+    if (!e.target.closest('.topbar-btn') && !e.target.closest('.topbar-dropdown')) {
+        document.getElementById('notifDropdown')?.classList.remove('show');
+        document.getElementById('msgDropdown')?.classList.remove('show');
+    }
+});
 
 // ===== AI CHAT ASSISTANT LOGIC =====
 function toggleAIChat() {
