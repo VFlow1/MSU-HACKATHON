@@ -68,6 +68,7 @@ async function loadEnvConfig() {
 let tasksData = [];
 let coursesData = [];
 let employeesData = [];
+let projectsData = [];
 
 // Helper function to format Date ISO -> Thai
 function formatDateThai(isoStr) {
@@ -271,6 +272,9 @@ async function loadRealData() {
             };
         });
 
+        // Store projects globally
+        projectsData = projects;
+
     } catch (error) {
         console.error("Error loading and transforming JSON data:", error);
     }
@@ -281,11 +285,13 @@ async function initDatabase() {
     const savedTasks = localStorage.getItem('tasksData');
     const savedCourses = localStorage.getItem('coursesData');
     const savedEmployees = localStorage.getItem('employeesData');
+    const savedProjects = localStorage.getItem('projectsData');
 
-    if (savedTasks && savedCourses && savedEmployees) {
+    if (savedTasks && savedCourses && savedEmployees && savedProjects) {
         tasksData = JSON.parse(savedTasks);
         coursesData = JSON.parse(savedCourses);
         employeesData = JSON.parse(savedEmployees);
+        projectsData = JSON.parse(savedProjects);
     } else {
         await loadRealData();
         saveDatabase();
@@ -296,12 +302,14 @@ function saveDatabase() {
     localStorage.setItem('tasksData', JSON.stringify(tasksData));
     localStorage.setItem('coursesData', JSON.stringify(coursesData));
     localStorage.setItem('employeesData', JSON.stringify(employeesData));
+    localStorage.setItem('projectsData', JSON.stringify(projectsData));
 }
 
 async function resetDatabase() {
     localStorage.removeItem('tasksData');
     localStorage.removeItem('coursesData');
     localStorage.removeItem('employeesData');
+    localStorage.removeItem('projectsData');
     await loadRealData();
     saveDatabase();
 }
