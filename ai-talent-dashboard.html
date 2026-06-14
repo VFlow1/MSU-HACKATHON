@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Driven Task & Learning Management Ecosystem</title>
+    <meta name="description" content="ระบบบริหารงานและพัฒนาบุคลากรขับเคลื่อนด้วย AI (AI-Driven Task & Learning Management Ecosystem) สำหรับองค์กรยุคใหม่">
+    <meta property="og:title" content="AI-Driven Task & Learning Management Ecosystem">
+    <meta property="og:description" content="ยกระดับทีมด้วยระบบบอร์ดงานและบอร์ดพัฒนาทักษะพนักงานอัจฉริยะ พร้อม AI ผู้ช่วยส่วนตัววิเคราะห์ความเสี่ยงโครงการ">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#D4A017">
+</head>
+<body class="dark-theme">
+    <!-- Full-page Liquid Glass Beams background -->
+    <canvas id="glass-bg-canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
+
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <div class="logo-icon"><i class="fas fa-brain"></i></div>
+                <div class="logo-text">
+                    AI-TALENT
+                    <span>ระบบบริหารงานและพัฒนาบุคลากร</span>
+                </div>
+            </div>
+        </div>
+        <nav class="nav-menu" role="navigation" aria-label="Main Navigation">
+            <a class="nav-item active" data-section="dashboard" onclick="showSection('dashboard')" tabindex="0" aria-label="ภาพรวมแดชบอร์ด">
+                <i class="fas fa-chart-pie" aria-hidden="true"></i>
+                <span>ภาพรวม (Dashboard)</span>
+            </a>
+            <a class="nav-item" data-section="tasks" onclick="showSection('tasks')" tabindex="0" aria-label="จัดการงาน">
+                <i class="fas fa-tasks" aria-hidden="true"></i>
+                <span>จัดการงาน (Tasks)</span>
+                <span class="badge">3</span>
+            </a>
+            <a class="nav-item" data-section="learning" onclick="showSection('learning')" tabindex="0" aria-label="ระบบเรียนรู้แอลเอ็มเอส">
+                <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                <span>ระบบเรียนรู้ (LMS)</span>
+            </a>
+            <a class="nav-item" data-section="ai-insights" onclick="showSection('ai-insights')" tabindex="0" aria-label="เอไออินไซต์">
+                <i class="fas fa-robot" aria-hidden="true"></i>
+                <span>AI Insights</span>
+            </a>
+            <a class="nav-item" data-section="ai-agent" onclick="showSection('ai-agent')" tabindex="0" aria-label="เอไอเอเจนต์">
+                <i class="fas fa-lightbulb" aria-hidden="true"></i>
+                <span>AI Agent อัจฉริยะ</span>
+                <span class="badge" style="background: var(--primary-yellow); color: var(--dark-gray); font-size: 9px;">AGENT</span>
+            </a>
+            <div class="nav-section-title">รายงาน</div>
+            <a class="nav-item" data-section="reports" onclick="showSection('reports')" tabindex="0" aria-label="รายงานประจำเดือน">
+                <i class="fas fa-file-alt" aria-hidden="true"></i>
+                <span>รายงานประจำเดือน</span>
+            </a>
+            <a class="nav-item" data-section="analytics" onclick="showSection('analytics')" tabindex="0" aria-label="วิเคราะห์ข้อมูล">
+                <i class="fas fa-chart-line" aria-hidden="true"></i>
+                <span>วิเคราะห์ข้อมูล</span>
+            </a>
+            <div class="nav-section-title">จัดการ</div>
+            <a class="nav-item" data-section="employees" onclick="showSection('employees')" tabindex="0" aria-label="ข้อมูลบุคลากร">
+                <i class="fas fa-users" aria-hidden="true"></i>
+                <span>บุคลากร</span>
+            </a>
+            <a class="nav-item" data-section="settings" onclick="showSection('settings')" tabindex="0" aria-label="ตั้งค่าระบบ">
+                <i class="fas fa-cog" aria-hidden="true"></i>
+                <span>ตั้งค่า</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar">SM</div>
+                <div class="user-info">
+                    <div class="user-name">สมชาย ใจดี</div>
+                    <div class="user-role">ผู้จัดการโครงการ</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-toggle" id="mobileToggle" onclick="toggleSidebar()" aria-label="เปิด/ปิดเมนูนำทางด้านข้าง">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div>
+                    <h1 class="page-title" id="pageTitle">ภาพรวมระบบ</h1>
+                    <div class="breadcrumb" id="breadcrumb">
+                        <a href="#" onclick="showSection('dashboard')">หน้าแรก</a> / ภาพรวมระบบ
+                    </div>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="search-box">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                    <input type="text" placeholder="ค้นหางาน, คอร์ส, หรือบุคลากร..." id="globalSearch" aria-label="ค้นหาข้อมูลระบบ">
+                </div>
+                <button class="topbar-btn tooltip" data-tooltip="การแจ้งเตือน" aria-label="การแจ้งเตือน">
+                    <i class="fas fa-bell" aria-hidden="true"></i>
+                    <span class="notif-dot"></span>
+                </button>
+                <button class="topbar-btn tooltip" data-tooltip="ข้อความ" aria-label="ข้อความ">
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                </button>
+                <button class="topbar-btn tooltip" data-tooltip="ตั้งค่าระบบ" aria-label="ตั้งค่าระบบ" onclick="showSection('settings')">
+                    <i class="fas fa-cog" aria-hidden="true"></i>
+                </button>
+                <button class="topbar-btn tooltip" data-tooltip="เปิด/ปิดเสียงเอฟเฟกต์" id="soundToggleBtn" onclick="toggleSound()" aria-label="สลับเสียง">
+                    <i class="fas fa-volume-mute" id="soundToggleIcon"></i>
+                </button>
+            </div>
+        </header>
+
+        <div class="content-area">
+
+            <!-- DASHBOARD SECTION -->
+            <section id="dashboard" class="section active">
+                <div class="kpi-grid">
+                    <div class="kpi-card slide-up" style="animation-delay:0.05s">
+                        <div class="kpi-header">
+                            <span class="kpi-label">งานที่เสร็จสิ้น</span>
+                            <div class="kpi-icon-wrapper">
+                                <svg class="kpi-ring" width="46" height="46">
+                                    <circle class="kpi-ring-bg" cx="23" cy="23" r="20"></circle>
+                                    <circle class="kpi-ring-bar green" cx="23" cy="23" r="20" data-value="95"></circle>
+                                </svg>
+                                <div class="kpi-icon green"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="kpi-value-done" data-target="128">0</div>
+                        <div class="kpi-change up">
+                            <i class="fas fa-arrow-up"></i> 12% เมื่อเทียบกับเดือนที่แล้ว
+                        </div>
+                    </div>
+                    <div class="kpi-card slide-up" style="animation-delay:0.1s">
+                        <div class="kpi-header">
+                            <span class="kpi-label">งานที่ติดขัด (Blocked)</span>
+                            <div class="kpi-icon-wrapper">
+                                <svg class="kpi-ring" width="46" height="46">
+                                    <circle class="kpi-ring-bg" cx="23" cy="23" r="20"></circle>
+                                    <circle class="kpi-ring-bar red" cx="23" cy="23" r="20" data-value="15"></circle>
+                                </svg>
+                                <div class="kpi-icon red"><i class="fas fa-exclamation-triangle"></i></div>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="kpi-value-blocked" data-target="7">0</div>
+                        <div class="kpi-change down">
+                            <i class="fas fa-arrow-down"></i> 3 รายการใหม่วันนี้
+                        </div>
+                    </div>
+                    <div class="kpi-card slide-up" style="animation-delay:0.15s">
+                        <div class="kpi-header">
+                            <span class="kpi-label">อัตราเรียนจบ (Completion)</span>
+                            <div class="kpi-icon-wrapper">
+                                <svg class="kpi-ring" width="46" height="46">
+                                    <circle class="kpi-ring-bg" cx="23" cy="23" r="20"></circle>
+                                    <circle class="kpi-ring-bar yellow" cx="23" cy="23" r="20" data-value="87.4"></circle>
+                                </svg>
+                                <div class="kpi-icon yellow"><i class="fas fa-graduation-cap"></i></div>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="kpi-value-lms" data-target="87.4" data-decimals="1" data-suffix="%">0%</div>
+                        <div class="kpi-change up">
+                            <i class="fas fa-arrow-up"></i> 5.2% เมื่อเทียบกับเดือนที่แล้ว
+                        </div>
+                    </div>
+                    <div class="kpi-card slide-up" style="animation-delay:0.2s">
+                        <div class="kpi-header">
+                            <span class="kpi-label">คะแนนประสิทธิภาพทีม</span>
+                            <div class="kpi-icon-wrapper">
+                                <svg class="kpi-ring" width="46" height="46">
+                                    <circle class="kpi-ring-bg" cx="23" cy="23" r="20"></circle>
+                                    <circle class="kpi-ring-bar blue" cx="23" cy="23" r="20" data-value="92.1"></circle>
+                                </svg>
+                                <div class="kpi-icon blue"><i class="fas fa-tachometer-alt"></i></div>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="kpi-value-perf" data-target="92.1" data-decimals="1">0</div>
+                        <div class="kpi-change up">
+                            <i class="fas fa-arrow-up"></i> 1.8 คะแนน
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Activity Ticker -->
+                <div class="activity-ticker-container slide-up" style="animation-delay:0.22s">
+                    <div class="ticker-title">
+                        <i class="fas fa-bolt" style="color: var(--primary-yellow);"></i> กิจกรรมล่าสุด
+                    </div>
+                    <div class="ticker-wrap">
+                        <div class="ticker-items" id="activityTickerItems">
+                            <span class="ticker-item"><i class="fas fa-sync-alt fa-spin"></i> กำลังโหลดกิจกรรมล่าสุด...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ai-banner slide-up" style="animation-delay:0.25s">
+                    <canvas class="ai-banner-canvas" id="canvas-banner-dashboard"></canvas>
+                    <div class="ai-icon"><i class="fas fa-robot"></i></div>
+                    <div class="ai-content">
+                        <div class="ai-title">AI ตรวจพบความเสี่ยง 3 รายการ</div>
+                        <div class="ai-desc">งาน "Setup CI/CD Pipeline" ใกล้ถึง Deadline แต่ผู้รับผิดชอบยังเรียนคอร์ส Cloud ไม่จบ ระบบ AI แนะนำให้สลับงานไปให้คนที่มีทักษะพร้อม</div>
+                    </div>
+                    <div class="ai-actions">
+                        <button class="btn btn-primary" onclick="showSection('ai-insights')">
+                            <i class="fas fa-eye"></i> ดูรายละเอียด
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-check"></i> อนุมัติ
+                        </button>
+                    </div>
+                </div>
+
+                <div class="charts-row slide-up" style="animation-delay:0.3s">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title">แนวโน้มประสิทธิภาพงาน</div>
+                                <div class="chart-subtitle">เปรียบเทียบระหว่างงานที่เสร็จ vs งานที่ติดขัด</div>
+                            </div>
+                            <div class="chart-filter">
+                                <button class="filter-btn active">7 วัน</button>
+                                <button class="filter-btn">30 วัน</button>
+                                <button class="filter-btn">90 วัน</button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="performanceChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title">สถานะงานทั้งหมด</div>
+                                <div class="chart-subtitle">จำนวนงานตามสถานะ</div>
+                            </div>
+                        </div>
+                        <div class="chart-container-sm">
+                            <canvas id="statusChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-card slide-up" style="animation-delay:0.35s">
+                    <div class="table-header">
+                        <div class="table-title">งานที่ต้องติดตามด่วน</div>
+                        <div class="table-tools">
+                            <input type="text" class="search-input" placeholder="ค้นหางาน..." id="taskSearch">
+                            <select class="filter-select" id="taskFilter">
+                                <option value="all">ทั้งหมด</option>
+                                <option value="blocked">ติดขัด</option>
+                                <option value="critical">วิกฤต</option>
+                                <option value="high">สูง</option>
+                            </select>
+                        </div>
+                    </div>
+                    <table class="data-table" id="tasksTable">
+                        <thead>
+                            <tr>
+                                <th onclick="sortTable('tasksTable', 0)">ชื่องาน <i class="fas fa-sort"></i></th>
+                                <th onclick="sortTable('tasksTable', 1)">ผู้รับผิดชอบ <i class="fas fa-sort"></i></th>
+                                <th onclick="sortTable('tasksTable', 2)">ความสำคัญ <i class="fas fa-sort"></i></th>
+                                <th onclick="sortTable('tasksTable', 3)">สถานะ <i class="fas fa-sort"></i></th>
+                                <th onclick="sortTable('tasksTable', 4)">ความคืบหน้า <i class="fas fa-sort"></i></th>
+                                <th onclick="sortTable('tasksTable', 5)">Deadline <i class="fas fa-sort"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tasksTableBody">
+                        </tbody>
+                    </table>
+                    <div class="table-pagination">
+                        <span class="pagination-info" id="tasksTablePaginationInfo">แสดง 1-6 จาก 42 รายการ</span>
+                        <div class="pagination-btns" id="tasksTablePaginationBtns" style="display:none;">
+                            <button class="pagination-btn" disabled aria-label="หน้าก่อนหน้า"><i class="fas fa-chevron-left"></i></button>
+                            <button class="pagination-btn active">1</button>
+                            <button class="pagination-btn" aria-label="หน้าถัดไป"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TASKS SECTION -->
+            <section id="tasks" class="section">
+                <div class="table-card">
+                    <div class="table-header">
+                        <div class="table-title">รายการงานทั้งหมด</div>
+                        <div class="table-tools">
+                            <input type="text" class="search-input" id="allTasksSearch" placeholder="ค้นหางาน..." aria-label="ค้นหาข้อมูลงาน">
+                            <select class="filter-select" id="allTasksFilter" aria-label="กรองสถานะงาน">
+                                <option value="all">ทั้งหมด</option>
+                                <option value="blocked">ติดขัด</option>
+                                <option value="in-progress">กำลังทำ</option>
+                                <option value="completed">เสร็จสิ้น</option>
+                                <option value="pending">รอดำเนินการ</option>
+                            </select>
+                            <button class="btn btn-outline btn-sm" onclick="exportTasksCSV()"><i class="fas fa-download"></i> Export CSV</button>
+                            <button class="btn btn-primary btn-sm" onclick="openAddTaskModal()"><i class="fas fa-plus" aria-hidden="true"></i> เพิ่มงาน</button>
+                        </div>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ชื่องาน</th>
+                                <th>ผู้รับผิดชอบ</th>
+                                <th>ความสำคัญ</th>
+                                <th>สถานะ</th>
+                                <th>ความคืบหน้า</th>
+                                <th>Deadline</th>
+                                <th>AI Risk</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allTasksBody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- LEARNING SECTION -->
+            <section id="learning" class="section">
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <span class="kpi-label">คอร์สที่กำลังเรียน</span>
+                            <div class="kpi-icon yellow"><i class="fas fa-book-open"></i></div>
+                        </div>
+                        <div class="kpi-value">24</div>
+                        <div class="kpi-change neutral">จาก 45 บุคลากร</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <span class="kpi-label">อัตรา Drop-out</span>
+                            <div class="kpi-icon red"><i class="fas fa-user-slash"></i></div>
+                        </div>
+                        <div class="kpi-value">8.3%</div>
+                        <div class="kpi-change up"><i class="fas fa-arrow-down"></i> ลดลง 2.1%</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <span class="kpi-label">เวลาเรียนเฉลี่ย</span>
+                            <div class="kpi-icon blue"><i class="fas fa-clock"></i></div>
+                        </div>
+                        <div class="kpi-value">4.2 ชม.</div>
+                        <div class="kpi-change up"><i class="fas fa-arrow-up"></i> 0.5 ชม./สัปดาห์</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <span class="kpi-label">คะแนนเฉลี่ย</span>
+                            <div class="kpi-icon green"><i class="fas fa-star"></i></div>
+                        </div>
+                        <div class="kpi-value">82.5</div>
+                        <div class="kpi-change up"><i class="fas fa-arrow-up"></i> 3.2 คะแนน</div>
+                    </div>
+                </div>
+
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title">แนวโน้มการเรียนรู้</div>
+                                <div class="chart-subtitle">จำนวนบทเรียนที่เสร็จสิ้นรายสัปดาห์</div>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="learningChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title">สถานะคอร์ส</div>
+                                <div class="chart-subtitle">จำนวนคอร์สตามสถานะ</div>
+                            </div>
+                        </div>
+                        <div class="chart-container-sm">
+                            <canvas id="courseStatusChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-card" style="margin-top:20px">
+                    <div class="table-header">
+                        <div class="table-title">คอร์สเรียนที่ต้องติดตาม</div>
+                        <div class="table-tools">
+                            <input type="text" class="search-input" id="lmsCoursesSearch" placeholder="ค้นหาคอร์ส..." aria-label="ค้นหาคอร์สเรียน">
+                            <select class="filter-select" id="lmsCoursesFilter" aria-label="กรองสถานะคอร์สเรียน">
+                                <option value="all">ทั้งหมด</option>
+                                <option value="in-progress">กำลังเรียน</option>
+                                <option value="dropped">ดอง</option>
+                                <option value="completed">เสร็จสิ้น</option>
+                            </select>
+                            <button class="btn btn-outline btn-sm" onclick="exportLmsCSV()"><i class="fas fa-download"></i> Export CSV</button>
+                        </div>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ชื่อคอร์ส</th>
+                                <th>ผู้เรียน</th>
+                                <th>สถานะ</th>
+                                <th>ความคืบหน้า</th>
+                                <th>บทเรียนที่เหลือ</th>
+                                <th>AI แนะนำ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="coursesBody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- AI INSIGHTS SECTION -->
+            <section id="ai-insights" class="section">
+                <div class="ai-banner" style="margin-bottom:24px">
+                    <canvas class="ai-banner-canvas" id="canvas-banner-insights"></canvas>
+                    <div class="ai-icon"><i class="fas fa-brain"></i></div>
+                    <div class="ai-content">
+                        <div class="ai-title">AI Risk Predictor & Smart Allocator</div>
+                        <div class="ai-desc">ระบบ AI วิเคราะห์ความเสี่ยงของโปรเจกต์แบบ Real-time และแนะนำการจัดสรรทรัพยากรบุคคลอัจฉริยะ</div>
+                    </div>
+                </div>
+
+                <div style="display:flex; justify-content:flex-end; align-items:center; margin-bottom:20px;">
+                    <button class="btn btn-primary" id="runAiAnalysisBtn" onclick="runSystemAiAnalysis()" style="background: linear-gradient(135deg, var(--primary-yellow-dark), var(--primary-yellow)); border: none; box-shadow: 0 4px 12px rgba(212, 160, 23, 0.2); font-weight: 500; font-family: inherit;">
+                        <i class="fas fa-robot"></i> <span id="runAiAnalysisBtnText">วิเคราะห์ประสิทธิภาพเชิงลึกด้วย AI</span>
+                    </button>
+                </div>
+
+                <div id="dynamicAiAnalysisResult" style="display: none; margin-bottom: 24px;" class="slide-up">
+                    <div class="detail-card detail-card-full" style="border-left: 4px solid var(--primary-yellow); background: var(--white); box-shadow: var(--shadow);">
+                        <div class="detail-card-title" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
+                            <span style="font-weight: 700; color: var(--dark-gray);"><i class="fas fa-brain" style="color: var(--primary-yellow);"></i> ผลการวิเคราะห์อัจฉริยะโดย Gemini AI</span>
+                            <span class="badge" style="background:var(--success); color:var(--white); font-size:10px; font-weight:600; padding:4px 8px; border-radius:12px;">วิเคราะห์สดเรียลไทม์</span>
+                        </div>
+                        <div id="aiAnalysisTextContent" class="markdown-body" style="font-size:14px; line-height:1.7; color: var(--dark-gray);">
+                            <!-- AI Content will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-grid">
+                    <div class="detail-card">
+                        <div class="detail-card-title"><i class="fas fa-exclamation-circle"></i> ความเสี่ยงที่ตรวจพบ</div>
+                        <div class="detail-row">
+                            <span class="detail-label">งานที่ติดขัด (Blocked)</span>
+                            <span class="detail-value highlight">7 รายการ</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">ใกล้ถึง Deadline</span>
+                            <span class="detail-value highlight">5 รายการ</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">ทักษะไม่ตรงกับงาน</span>
+                            <span class="detail-value highlight">3 รายการ</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">คอร์สที่ถูกดอง (DROPPED)</span>
+                            <span class="detail-value highlight">4 รายการ</span>
+                        </div>
+                    </div>
+                    <div class="detail-card">
+                        <div class="detail-card-title"><i class="fas fa-magic"></i> คำแนะนำจาก AI</div>
+                        <div class="ai-suggestion-box">
+                            <div class="suggestion-title"><i class="fas fa-lightbulb"></i> แนะนำการสลับงาน</div>
+                            <div class="suggestion-text">
+                                งาน "Setup CI/CD Pipeline" ควรสลับจาก <strong>สมชาย</strong> ไปให้ <strong>วิภาดา</strong> 
+                                เพราะวิภาดาเรียนคอร์ส Cloud Infrastructure จบแล้ว (100%) และไม่มีงานด่วนค้างอยู่
+                            </div>
+                        </div>
+                        <div class="ai-suggestion-box" style="margin-top:12px">
+                            <div class="suggestion-title"><i class="fas fa-calendar-alt"></i> แนะนำตารางเรียน</div>
+                            <div class="suggestion-text">
+                                AI แนะนำให้แบ่งคอร์ส "Advanced Python" ออกเป็นชิ้นเล็กๆ วันละ 15 นาที 
+                                เพื่อลดความเสี่ยงการ Drop-out ของผู้เรียน 3 ราย
+                            </div>
+                        </div>
+                    </div>
+                    <div class="detail-card detail-card-full">
+                        <div class="detail-card-title"><i class="fas fa-history"></i> ประวัติการดำเนินการของ AI</div>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-dot completed"></div>
+                                <div class="timeline-time">13 มิ.ย. 2026 - 10:15 น.</div>
+                                <div class="timeline-text">AI ตรวจพบงาน "API Integration" ติดขัด &rarr; สลับงานให้ <strong>ณัฐพงษ์</strong> สำเร็จ</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot completed"></div>
+                                <div class="timeline-time">12 มิ.ย. 2026 - 14:30 น.</div>
+                                <div class="timeline-text">AI ปรับตารางเรียน "Data Science 101" ให้ <strong>สุดา</strong> เป็นชิ้นเล็กๆ สำเร็จ</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-time">12 มิ.ย. 2026 - 09:00 น.</div>
+                                <div class="timeline-text">AI แจ้งเตือนความเสี่ยง 3 รายการ &rarr; รอการอนุมัติจากผู้จัดการ</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot pending"></div>
+                                <div class="timeline-time">11 มิ.ย. 2026 - 16:45 น.</div>
+                                <div class="timeline-text">AI วิเคราะห์ประสิทธิภาพทีมรายสัปดาห์ &rarr; รายงานพร้อมแล้ว</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EMPLOYEES SECTION -->
+            <section id="employees" class="section">
+                <div class="table-card">
+                    <div class="table-header">
+                        <div class="table-title">รายชื่อบุคลากร</div>
+                        <div class="table-tools">
+                            <input type="text" class="search-input" id="employeesSearch" placeholder="ค้นหาบุคลากร..." aria-label="ค้นหาบุคลากร">
+                            <select class="filter-select" id="employeesFilter" aria-label="กรองฝ่ายของบุคลากร">
+                                <option value="all">ทั้งหมด</option>
+                                <option value="ฝ่ายพัฒนา">ฝ่ายพัฒนา</option>
+                                <option value="ฝ่ายออกแบบ">ฝ่ายออกแบบ</option>
+                                <option value="ฝ่ายบริหาร">ฝ่ายบริหาร</option>
+                            </select>
+                            <button class="btn btn-outline btn-sm" onclick="exportEmployeesCSV()"><i class="fas fa-download"></i> Export CSV</button>
+                            <button class="btn btn-primary btn-sm" onclick="openAddEmployeeModal()"><i class="fas fa-plus" aria-hidden="true"></i> เพิ่มบุคลากร</button>
+                        </div>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ชื่อ-นามสกุล</th>
+                                <th>ตำแหน่ง</th>
+                                <th>ฝ่าย</th>
+                                <th>งานที่รับผิดชอบ</th>
+                                <th>คอร์สที่เรียน</th>
+                                <th>ทักษะหลัก</th>
+                                <th>ประสิทธิภาพ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="employeesBody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- DETAIL PAGE -->
+            <section id="detail" class="section">
+                <div class="detail-header">
+                    <a class="detail-back" onclick="goBack()">
+                        <i class="fas fa-arrow-left"></i> กลับไปหน้าก่อนหน้า
+                    </a>
+                    <div class="ai-actions">
+                        <button class="btn btn-outline btn-sm"><i class="fas fa-edit"></i> แก้ไข</button>
+                        <button class="btn btn-primary btn-sm"><i class="fas fa-check"></i> อนุมัติ</button>
+                    </div>
+                </div>
+                <div id="detailContent">
+                </div>
+            </section>
+
+            <!-- PLACEHOLDER SECTIONS -->
+            <section id="reports" class="section">
+                <div class="table-card" style="margin-bottom: 24px; padding: 20px;">
+                    <div class="table-header" style="flex-wrap: wrap; gap: 16px;">
+                        <div class="table-title" style="margin-bottom: 0;">เครื่องมือสร้างรายงานองค์กร</div>
+                        <div class="table-tools" style="flex-wrap: wrap; gap: 16px; margin-left: auto; width: auto; justify-content: flex-end;">
+                            <div class="filter-group" style="display: flex; gap: 8px; align-items: center;">
+                                <label for="reportTypeSelect" style="font-size: 13px; font-weight: 600; color: var(--dark-gray);">ประเภทรายงาน:</label>
+                                <select class="filter-select" id="reportTypeSelect" style="width: 260px; height: 38px; padding: 0 12px; border-radius: 8px;">
+                                    <option value="monthly-overview">รายงานภาพรวมโครงการและพัฒนาบุคลากรรายเดือน</option>
+                                    <option value="task-bottlenecks">รายงานประเมินความเสี่ยงและงานติดขัด (Bottlenecks)</option>
+                                    <option value="skill-development">รายงานความก้าวหน้าการอบรมทักษะ LMS</option>
+                                </select>
+                            </div>
+                            <div class="filter-group" style="display: flex; gap: 8px; align-items: center;">
+                                <label for="reportDeptSelect" style="font-size: 13px; font-weight: 600; color: var(--dark-gray);">ฝ่าย:</label>
+                                <select class="filter-select" id="reportDeptSelect" style="height: 38px; padding: 0 12px; border-radius: 8px;">
+                                    <option value="all">ทั้งหมด</option>
+                                    <option value="ฝ่ายพัฒนา">ฝ่ายพัฒนา</option>
+                                    <option value="ฝ่ายออกแบบ">ฝ่ายออกแบบ</option>
+                                    <option value="ฝ่ายบริหาร">ฝ่ายบริหาร</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary" onclick="generateReportData()" style="height: 38px; display: flex; align-items: center; gap: 8px; padding: 0 16px; border-radius: 8px; font-weight: 500;">
+                                <i class="fas fa-cogs"></i> สร้างรายงาน
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Report Render Area -->
+                <div id="reportRenderArea" class="report-document" style="display: none; animation: fadeIn 0.4s ease;">
+                    <div class="report-actions-bar" style="display: flex; gap: 12px; margin-bottom: 20px; justify-content: flex-end;">
+                        <button class="btn btn-outline" onclick="window.print()" style="display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 8px;">
+                            <i class="fas fa-print"></i> พิมพ์ / บันทึก PDF
+                        </button>
+                        <button class="btn btn-outline" onclick="exportReportCSV()" style="display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 8px;">
+                            <i class="fas fa-file-csv"></i> ส่งออก CSV
+                        </button>
+                    </div>
+                    
+                    <div class="report-paper" style="background: var(--white); padding: 40px; border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border); max-width: 900px; margin: 0 auto; color: #111;">
+                        <div class="report-header-section" style="display: flex; justify-content: space-between; border-bottom: 2px solid var(--dark-gray); padding-bottom: 20px; margin-bottom: 24px;">
+                            <div class="report-logo" style="font-weight: 700; font-size: 18px; color: var(--primary-yellow-dark); display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-brain"></i> AI-TALENT ECOSYSTEM
+                            </div>
+                            <div style="text-align: right;">
+                                <p style="font-size: 11px; color: var(--medium-gray); margin-bottom: 2px;">ประเภทเอกสาร: เอกสารรายงานประเมินผลภายใน</p>
+                                <p style="font-size: 11px; color: var(--medium-gray);">ความลับระดับ: ลับเฉพาะ</p>
+                            </div>
+                        </div>
+
+                        <div class="report-title-box" style="text-align: center; margin-bottom: 32px;">
+                            <h2 id="reportTitleText" style="font-size: 24px; font-weight: 700; margin-bottom: 6px; color: var(--dark-gray);">รายงานสรุปผล</h2>
+                            <p id="reportSubText" style="font-size: 14px; color: var(--medium-gray);">ฝ่ายงานทั้งหมด | ข้อมูล ณ วันที่ 13 มิถุนายน 2026</p>
+                        </div>
+
+                        <div class="report-kpis-row" id="reportKpisRow" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px;">
+                            <!-- Dynamically generated KPIs -->
+                        </div>
+
+                        <div class="report-content-box" id="reportDetailsBox" style="margin-bottom: 32px;">
+                            <!-- Dynamically generated report details -->
+                        </div>
+
+                        <div class="report-table-section" style="margin-bottom: 36px;">
+                            <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px; color: var(--dark-gray); border-left: 3px solid var(--primary-yellow); padding-left: 8px;">ตารางประเมินผลระดับบุคคล</h3>
+                            <table class="report-table" id="reportTableData" style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                                <thead>
+                                    <!-- Dynamic headers -->
+                                </thead>
+                                <tbody>
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="report-footer-section" style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid var(--border); padding-top: 24px; margin-top: 40px;">
+                            <div class="report-date-footer" style="font-size: 11px; color: var(--medium-gray);">
+                                ออกเอกสารโดยระบบอัตโนมัติของ AI-Talent Ecosystem<br>วันที่พิมพ์: 13 มิ.ย. 2026
+                            </div>
+                            <div class="signature-line" style="text-align: center; width: 220px;">
+                                <div class="line" style="border-bottom: 1px solid #111; margin-bottom: 8px; height: 30px;"></div>
+                                <p style="font-weight: 600; font-size: 13px;">( สมชาย ใจดี )</p>
+                                <p style="font-size: 12px; color: var(--medium-gray);">ผู้จัดการโครงการ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="reportPromptBox" class="chart-card" style="text-align:center; padding:80px 24px; border: 2px dashed var(--border); background: transparent; box-shadow: none;">
+                    <i class="fas fa-file-medical" style="font-size:48px; color:var(--primary-yellow); margin-bottom:16px;"></i>
+                    <h2 style="font-size:18px; color:var(--dark-gray); margin-bottom:8px;">โปรดเลือกประเภทรายงานด้านบนและกด "สร้างรายงาน"</h2>
+                    <p style="color:var(--medium-gray);">เอกสารรายงานอย่างเป็นทางการจะประมวลผลขึ้นมาทันทีโดยอิงจากข้อมูลจริงในระบบ</p>
+                </div>
+            </section>
+
+            <section id="analytics" class="section">
+                <div class="kpi-grid" style="margin-bottom: 24px;">
+                    <div class="kpi-card slide-up" style="animation-delay:0.05s">
+                        <div class="kpi-header">
+                            <span class="kpi-label">แผนกประสิทธิภาพสูงสุด</span>
+                            <div class="kpi-icon green"><i class="fas fa-trophy"></i></div>
+                        </div>
+                        <div class="kpi-value" id="topDeptName" style="font-size: 18px; font-weight: 700; margin-top: 4px;">-</div>
+                        <div class="kpi-change neutral" id="topDeptScore" style="font-size: 12px; margin-top: 8px;">ฝ่ายที่มีคะแนนสูงสุด</div>
+                    </div>
+                    <div class="kpi-card slide-up" style="animation-delay:0.1s">
+                        <div class="kpi-header">
+                            <span class="kpi-label">ระดับความเสี่ยงงานเฉลี่ย</span>
+                            <div class="kpi-icon yellow"><i class="fas fa-shield-alt"></i></div>
+                        </div>
+                        <div class="kpi-value" id="avgRiskText" style="font-size: 18px; font-weight: 700; margin-top: 4px;">-</div>
+                        <div class="kpi-change neutral" id="highRiskCount" style="font-size: 12px; margin-top: 8px;">งานวิกฤตค้างอยู่</div>
+                    </div>
+                    <div class="kpi-card slide-up" style="animation-delay:0.15s">
+                        <div class="kpi-header">
+                            <span class="kpi-label">คอร์สที่เรียนจบสะสม</span>
+                            <div class="kpi-icon green"><i class="fas fa-graduation-cap"></i></div>
+                        </div>
+                        <div class="kpi-value" id="completedCoursesCount" style="font-size: 20px; font-weight: 700; margin-top: 4px;">-</div>
+                        <div class="kpi-change up" id="completedCoursesPercent" style="font-size: 12px; margin-top: 8px;">% ของข้อมูลเรียนทั้งหมด</div>
+                    </div>
+                    <div class="kpi-card slide-up" style="animation-delay:0.2s">
+                        <div class="kpi-header">
+                            <span class="kpi-label">ทักษะที่หลากหลายทั้งหมด</span>
+                            <div class="kpi-icon blue"><i class="fas fa-layer-group"></i></div>
+                        </div>
+                        <div class="kpi-value" id="totalSkillsText" style="font-size: 20px; font-weight: 700; margin-top: 4px;">-</div>
+                        <div class="kpi-change neutral" style="font-size: 12px; margin-top: 8px;">ทักษะหลักทั้งหมดในทีม</div>
+                    </div>
+                </div>
+
+                <div class="analytics-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px;">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title">ประสิทธิภาพเฉลี่ยรายแผนก</div>
+                                <div class="chart-subtitle">คะแนนเฉลี่ยจากการเปรียบเทียบผลผลิตและการศึกษา</div>
+                            </div>
+                        </div>
+                        <div class="chart-container" style="height: 300px; position: relative;">
+                            <canvas id="deptPerformanceChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title">สถานะงานแยกตามความสำคัญ</div>
+                                <div class="chart-subtitle">ความสัมพันธ์ของระดับความสำคัญงานและสถานะดำเนินงาน</div>
+                            </div>
+                        </div>
+                        <div class="chart-container" style="height: 300px; position: relative;">
+                            <canvas id="priorityStatusChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-card" style="margin-top: 24px;">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">แผนภาพความเชี่ยวชาญทักษะหลัก (Skills Matrix Summary)</div>
+                            <div class="chart-subtitle">จำนวนบุคลากรที่มีทักษะเด่นตรงตามต้องการในองค์กร</div>
+                        </div>
+                    </div>
+                    <div class="chart-container" style="height: 350px; position: relative;">
+                        <canvas id="skillsMatrixChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI AGENT SECTION -->
+            <section id="ai-agent" class="section">
+                <div class="ai-banner" style="margin-bottom:24px; color: var(--white); box-shadow: var(--shadow);">
+                    <canvas class="ai-banner-canvas" id="canvas-banner-agent"></canvas>
+                    <div class="ai-icon" style="background: var(--primary-yellow); color: var(--dark-gray);"><i class="fas fa-lightbulb"></i></div>
+                    <div class="ai-content">
+                        <div class="ai-title" style="color: var(--white);">AI Agent Co-Pilot Brainstormer & Allocator</div>
+                        <div class="ai-desc" style="color: rgba(255,255,255,0.75);">ป้อนความตั้งใจของคุณ แล้วสั่งให้ AI Agent ร่วมระดมสมองคิดหัวข้องาน/โปรเจกต์ย่อย พร้อมจัดสรรคัดกรองพนักงานที่มีทักษะตรงในตารางมารับงานจริงและสร้างการ์ดงานลงบอร์ด</div>
+                    </div>
+                </div>
+
+                <div class="detail-grid" style="grid-template-columns: 1fr 2fr; gap: 24px;">
+                    <!-- Agent Controls -->
+                    <div class="detail-card">
+                        <div class="detail-card-title"><i class="fas fa-sliders-h"></i> ตั้งค่าโจทย์สำหรับ AI Agent</div>
+                        <form id="aiAgentForm" onsubmit="runAiAgentBrainstorm(event)" style="padding-top: 12px; display: flex; flex-direction: column; gap: 16px;">
+                            <div class="form-group">
+                                <label for="agentGoalSelect" style="font-size: 13px; font-weight: 600; color: var(--dark-gray); display: block; margin-bottom: 6px;">เป้าหมายวางแผน:</label>
+                                <select id="agentGoalSelect" class="form-control" style="width:100%; height:38px; border-radius:8px; padding:0 12px; border:1px solid var(--border);">
+                                    <option value="new-project">สร้างโปรเจกต์ใหม่ย่อยและมอบหมายตามทักษะ (Skill Matching)</option>
+                                    <option value="skill-remedial">วางแผนยกระดับเรียนรู้ LMS แก้ปัญหางานสะดุด (Remedial Plan)</option>
+                                    <option value="innovation">ระดมไอเดียนวัตกรรมเฉพาะทางของแผนก (Innovation Brainstorm)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="agentDeptSelect" style="font-size: 13px; font-weight: 600; color: var(--dark-gray); display: block; margin-bottom: 6px;">ฝ่ายงานหลักที่เกี่ยวข้อง:</label>
+                                <select id="agentDeptSelect" class="form-control" style="width:100%; height:38px; border-radius:8px; padding:0 12px; border:1px solid var(--border);">
+                                    <option value="all">ทุกแผนกในระบบ</option>
+                                    <option value="ฝ่ายพัฒนา">ฝ่ายพัฒนา (Developers)</option>
+                                    <option value="ฝ่ายออกแบบ">ฝ่ายออกแบบ (Designers)</option>
+                                    <option value="ฝ่ายบริหาร">ฝ่ายบริหาร (Managers)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="agentFocusInput" style="font-size: 13px; font-weight: 600; color: var(--dark-gray); display: block; margin-bottom: 6px;">รายละเอียดความต้องการ / คีย์เวิร์ดเน้นย้ำ:</label>
+                                <textarea id="agentFocusInput" class="form-control" rows="4" placeholder="เช่น 'พัฒนาความปลอดภัยการเก็บข้อมูลลูกค้า', 'ทำความสะอาด CSS และทำอนิเมชั่นพรีเมียม', 'จัดทริปเรียนรู้ระบบ DevOps คลาวด์'" style="width:100%; border-radius:8px; padding:10px 12px; border:1px solid var(--border); font-family: inherit; font-size:13px; resize:none;"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" id="startAgentBtn" style="background: linear-gradient(135deg, var(--primary-yellow-dark), var(--primary-yellow)); border: none; box-shadow: 0 4px 12px rgba(212, 160, 23, 0.3); font-weight: 600; height:42px; width:100%; border-radius:8px; display:flex; align-items:center; justify-content:center; gap:8px;">
+                                <i class="fas fa-play"></i> สั่งให้ AI Agent วางแผนและสแกนระบบ
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Agent Output Workspace -->
+                    <div class="detail-card">
+                        <div class="detail-card-title"><i class="fas fa-laptop-code"></i> พื้นที่ปฏิบัติการ AI Agent Workspace</div>
+                        
+                        <!-- Status Idle -->
+                        <div id="agentIdleState" style="text-align: center; padding: 60px 24px;">
+                            <i class="fas fa-robot" style="font-size: 54px; color: var(--border); margin-bottom: 16px;"></i>
+                            <h3 style="font-size: 16px; color: var(--medium-gray); font-weight: 600;">AI Agent รอรับคำสั่งของคุณ</h3>
+                            <p style="font-size: 13px; color: var(--medium-gray); max-width: 380px; margin: 8px auto 0;">กรอกเป้าหมายและรายละเอียดหัวข้อทางซ้ายมือ และกดสั่งให้ Agent เริ่มสแกนโครงสร้างทีมและระดมไอเดีย</p>
+                        </div>
+
+                        <!-- Status Loading / Step Progress -->
+                        <div id="agentLoadingState" style="display: none; padding: 20px 10px;">
+                            <div class="agent-steps-list" style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px;">
+                                <div class="agent-step" id="agentStep1">
+                                    <div class="step-icon"><i class="fas fa-circle-notch fa-spin"></i></div>
+                                    <div class="step-details">
+                                        <div class="step-title">1. ทำการค้นหาและตรวจสอบพนักงานที่มีในฝ่าย</div>
+                                        <div class="step-desc">อ่านฐานข้อมูล <code>users.json</code> เพื่อค้นหารายชื่อ สกิล และภาระงานเฉลี่ย...</div>
+                                    </div>
+                                </div>
+                                <div class="agent-step pending" id="agentStep2">
+                                    <div class="step-icon"><i class="fas fa-circle"></i></div>
+                                    <div class="step-details">
+                                        <div class="step-title">2. ตรวจสอบ Skill Gap และความต้องการวิชาชีพ</div>
+                                        <div class="step-desc">สแกนหาข้อผิดพลาดทางเทคนิคและวิชาหลักสูตรเรียนออนไลน์คงเหลือใน <code>enrollments.json</code>...</div>
+                                    </div>
+                                </div>
+                                <div class="agent-step pending" id="agentStep3">
+                                    <div class="step-icon"><i class="fas fa-circle"></i></div>
+                                    <div class="step-details">
+                                        <div class="step-title">3. ส่งวิเคราะห์ AI (Gemini) เพื่อเจนเนอเรตหัวข้องานย่อยและบุคคลที่เหมาะสม</div>
+                                        <div class="step-desc">ใช้สมองกลของ Gemini เพื่อสังเคราะห์โครงสร้างงานให้เหมาะสมกับประเด็นเป้าหมาย...</div>
+                                    </div>
+                                </div>
+                                <div class="agent-step pending" id="agentStep4">
+                                    <div class="step-icon"><i class="fas fa-circle"></i></div>
+                                    <div class="step-details">
+                                        <div class="step-title">4. สรุปแผนปฏิบัติการและจัดส่งผลงาน</div>
+                                        <div class="step-desc">ร่างรายระเอียดงาน ลำดับความสำคัญ และเดดไลน์เพื่อรอการอนุมัติ...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Status Result -->
+                        <div id="agentResultState" style="display: none; animation: fadeIn 0.4s ease;">
+                            <div style="background: rgba(212, 160, 23, 0.08); border-left: 4px solid var(--primary-yellow); padding: 14px 16px; border-radius: 4px; margin-bottom: 24px;">
+                                <strong style="display: block; font-size:14px; margin-bottom:4px; color: var(--primary-yellow-dark);"><i class="fas fa-quote-left"></i> สรุปมุมมองและการวางแผนโดย AI Agent:</strong>
+                                <p id="agentSummaryAnalysis" style="font-size: 13px; line-height: 1.6; color: var(--dark-gray);"></p>
+                            </div>
+
+                            <h3 style="font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--dark-gray);"><i class="fas fa-clipboard-list"></i> งานย่อย 3 รายการหลักที่ AI แนะนำให้สร้าง:</h3>
+                            <div id="agentIdeaCardsContainer" style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px;">
+                                <!-- Dynamically generated Idea Cards -->
+                            </div>
+
+                            <div style="display: flex; justify-content: flex-end; gap: 12px;">
+                                <button class="btn btn-outline" onclick="resetAgentWorkspace()" style="border-radius: 8px;">ระดมความคิดใหม่</button>
+                                <button class="btn btn-primary" onclick="applyAgentRecommendations()" style="background: var(--success); border-color: var(--success); box-shadow: 0 4px 10px rgba(76, 175, 80, 0.25); border-radius: 8px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                    <i class="fas fa-check-double"></i> อนุมัติและสร้างงานจริงทั้งหมด
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="settings" class="section">
+                <div class="detail-grid">
+                    <div class="detail-card">
+                        <div class="detail-card-title"><i class="fas fa-robot"></i> สถานะการเชื่อมต่อบริการ AI (AI Services Config)</div>
+                        <div class="settings-group" style="padding: 12px 0 8px; display: flex; flex-direction: column; gap: 12px;">
+                            
+                            <div class="api-status-item">
+                                <div style="font-size: 12px; font-weight: 600; color: var(--medium-gray); margin-bottom: 6px;">GOOGLE GEMINI API (สมองหลัก - วิเคราะห์ & วางแผน)</div>
+                                <div class="settings-status-box" id="geminiApiStatusBox" style="background: var(--light-gray); padding: 10px 14px; border-radius: 8px; display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 500;">
+                                    <i class="fas fa-circle-notch fa-spin" style="color: var(--primary-yellow);"></i> ตรวจสอบคีย์ Gemini...
+                                </div>
+                            </div>
+
+                            <div class="api-status-item">
+                                <div style="font-size: 12px; font-weight: 600; color: var(--medium-gray); margin-bottom: 6px;">GROQ CLOUD API (ความเร็วสูงพิเศษ - แชทบอร์ดหลัก)</div>
+                                <div class="settings-status-box" id="groqApiStatusBox" style="background: var(--light-gray); padding: 10px 14px; border-radius: 8px; display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 500;">
+                                    <i class="fas fa-circle-notch fa-spin" style="color: var(--primary-yellow);"></i> ตรวจสอบคีย์ Groq...
+                                </div>
+                            </div>
+
+                            <div class="api-status-item">
+                                <div style="font-size: 12px; font-weight: 600; color: var(--medium-gray); margin-bottom: 6px;">OPENROUTER API (ระบบสำรองอัจฉริยะ - โมเดลฟรี)</div>
+                                <div class="settings-status-box" id="openRouterApiStatusBox" style="background: var(--light-gray); padding: 10px 14px; border-radius: 8px; display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 500;">
+                                    <i class="fas fa-circle-notch fa-spin" style="color: var(--primary-yellow);"></i> ตรวจสอบคีย์ OpenRouter...
+                                </div>
+                            </div>
+                            
+                            <p class="settings-help-text" style="margin-top: 8px; font-size: 12.5px; color: var(--medium-gray); line-height: 1.5;">
+                                <i class="fas fa-info-circle"></i> คีย์ทั้งหมดจะถูกกรอกผ่านตัวแปรหลังบ้านในไฟล์ <code>js/data.js</code> เพื่อความปลอดภัยสูงสุด ระบบจัดเส้นทาง (AI Router) จะเลือกใช้งานคีย์ของค่ายที่ตรงวัตถุประสงค์โดยอัตโนมัติ และสลับสายกู้คืนเมื่อมีเหตุขัดข้อง
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-card-title"><i class="fas fa-bolt"></i> การจำลองข้อมูลแบบ Real-time (Simulation)</div>
+                        <div class="settings-form" style="padding: 16px 0 8px;">
+                            <div class="form-group-row" style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 14px; font-weight: 500; color: var(--dark-gray);">เปิดใช้งานการจำลองข้อมูลไหลเข้า</span>
+                                <label class="switch" style="position: relative; display: inline-block; width: 50px; height: 26px;">
+                                    <input type="checkbox" id="simToggle" checked onchange="toggleSimulationState()" style="opacity: 0; width: 0; height: 0;">
+                                    <span class="slider round" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
+                                </label>
+                            </div>
+                            <div class="form-group" style="margin-top: 20px;">
+                                <label for="simInterval" style="font-size: 13px; font-weight: 600; color: var(--dark-gray); display: block; margin-bottom: 8px;">ความถี่ในการสุ่มจำลองเหตุการณ์</label>
+                                <select id="simInterval" class="form-control" onchange="changeSimulationInterval()" style="width: 100%; height: 38px; border-radius: 8px; padding: 0 12px; border: 1px solid var(--border);">
+                                    <option value="5000">5 วินาที (สำหรับทดสอบเร็ว)</option>
+                                    <option value="10000">10 วินาที</option>
+                                    <option value="20000" selected>20 วินาที</option>
+                                    <option value="30000">30 วินาที</option>
+                                    <option value="60000">60 วินาที</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-card detail-card-full" style="grid-column: span 2;">
+                        <div class="detail-card-title"><i class="fas fa-database"></i> ล้างข้อมูลและจัดระเบียบฐานข้อมูลใหม่</div>
+                        <p style="color: var(--medium-gray); margin-bottom: 16px; font-size: 13.5px; line-height: 1.6;">
+                            คุณสามารถดำเนินการรีเซ็ตฐานข้อมูลทั้งหมดในเครื่องของคุณได้ ข้อมูลที่บันทึกการ CRUD ของการทดสอบก่อนหน้าใน `localStorage` จะถูกลบออก และระบบจะเริ่มโหลดข้อมูลใหม่ทั้งหมดดึงสดจากไฟล์ข้อมูลจริง 5 ไฟล์ของโครงการ ได้แก่ <code>users.json</code>, <code>tasks.json</code>, <code>projects.json</code>, <code>courses.json</code>, และ <code>enrollments.json</code>
+                        </p>
+                        <button class="btn btn-outline" style="border-color: var(--danger); color: var(--danger); font-weight: 500; font-family: inherit; display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 8px;" onclick="triggerResetDatabase()">
+                            <i class="fas fa-trash-alt"></i> ดำเนินการรีเซ็ตข้อมูลทั้งหมด
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ADD TASK MODAL -->
+        <div id="addTaskModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="addTaskModalTitle">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="addTaskModalTitle" class="modal-title">เพิ่มงานใหม่</h2>
+                    <button type="button" class="close-btn" onclick="closeAddTaskModal()" aria-label="ปิด">&times;</button>
+                </div>
+                <form id="addTaskForm" onsubmit="handleAddTask(event)">
+                    <div class="form-group">
+                        <label for="taskNameInput">ชื่องาน</label>
+                        <input type="text" id="taskNameInput" class="form-control" placeholder="ระบุชื่องาน" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskAssigneeInput">ผู้รับผิดชอบ</label>
+                        <select id="taskAssigneeInput" class="form-control" required>
+                            <option value="" disabled selected>เลือกผู้รับผิดชอบ</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskPriorityInput">ความสำคัญ</label>
+                        <select id="taskPriorityInput" class="form-control" required>
+                            <option value="low">ต่ำ</option>
+                            <option value="medium" selected>ปานกลาง</option>
+                            <option value="high">สูง</option>
+                            <option value="critical">วิกฤต</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDeadlineInput">Deadline</label>
+                        <input type="date" id="taskDeadlineInput" class="form-control" required>
+                    </div>
+                    <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:28px;">
+                        <button type="button" class="btn btn-outline" onclick="closeAddTaskModal()">ยกเลิก</button>
+                        <button type="submit" class="btn btn-primary">บันทึกงาน</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ADD EMPLOYEE MODAL -->
+        <div id="addEmployeeModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="addEmployeeModalTitle">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="addEmployeeModalTitle" class="modal-title">เพิ่มบุคลากรใหม่</h2>
+                    <button type="button" class="close-btn" onclick="closeAddEmployeeModal()" aria-label="ปิด">&times;</button>
+                </div>
+                <form id="addEmployeeForm" onsubmit="handleAddEmployee(event)">
+                    <div class="form-group">
+                        <label for="empNameInput">ชื่อ-นามสกุล</label>
+                        <input type="text" id="empNameInput" class="form-control" placeholder="ระบุชื่อ-นามสกุล" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="empPositionInput">ตำแหน่ง</label>
+                        <input type="text" id="empPositionInput" class="form-control" placeholder="ระบุตำแหน่ง" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="empDeptInput">ฝ่าย/แผนก</label>
+                        <select id="empDeptInput" class="form-control" required>
+                            <option value="ฝ่ายพัฒนา">ฝ่ายพัฒนา</option>
+                            <option value="ฝ่ายออกแบบ">ฝ่ายออกแบบ</option>
+                            <option value="ฝ่ายบริหาร">ฝ่ายบริหาร</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="empSkillsInput">ทักษะหลัก (คั่นด้วยจุลภาค)</label>
+                        <input type="text" id="empSkillsInput" class="form-control" placeholder="เช่น React, Node.js, Python" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="empPerformanceInput">คะแนนประสิทธิภาพการทำงาน (0-100)</label>
+                        <input type="number" id="empPerformanceInput" class="form-control" min="0" max="100" placeholder="80" required>
+                    </div>
+                    <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:28px;">
+                        <button type="button" class="btn btn-outline" onclick="closeAddEmployeeModal()">ยกเลิก</button>
+                        <button type="submit" class="btn btn-primary">บันทึกบุคลากร</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- AI Chat Assistant Floating Button -->
+        <button class="ai-chat-trigger" id="aiChatTrigger" onclick="toggleAIChat()" aria-label="คุยกับ AI ผู้ช่วย">
+            <i class="fas fa-comments"></i>
+            <span class="chat-badge">AI</span>
+        </button>
+
+        <!-- AI Chat Assistant Window -->
+        <div class="ai-chat-window" id="aiChatWindow">
+            <div class="ai-chat-header">
+                <div class="ai-chat-header-title">
+                    <i class="fas fa-brain"></i>
+                    <div>
+                        <strong>AI Assistant</strong>
+                        <span>พร้อมช่วยเหลือคุณดูแลโครงการ</span>
+                    </div>
+                </div>
+                <button class="ai-chat-close" onclick="toggleAIChat()" aria-label="ปิดแชท">&times;</button>
+            </div>
+            <div class="ai-chat-messages" id="aiChatMessages">
+                <div class="chat-message ai">
+                    สวัสดีครับ ผมเป็น AI ผู้ช่วยจัดการโครงการ ยินดีต้อนรับครับ! คุณสามารถถามข้อมูลในระบบกับผมได้เลย เช่น:
+                    <div class="chat-suggestions">
+                        <button class="suggestion-chip" onclick="askAIChat('ใครมีงานเยอะที่สุด?')">ใครมีงานเยอะที่สุด?</button>
+                        <button class="suggestion-chip" onclick="askAIChat('มีคอร์สเรียนไหนเรียนเสร็จแล้วบ้าง?')">คอร์สที่เรียนเสร็จมีอะไรบ้าง?</button>
+                        <button class="suggestion-chip" onclick="askAIChat('มีงานอะไรบ้างที่ติดขัดอยู่?')">มีงานไหนติดขัด (Blocked)?</button>
+                        <button class="suggestion-chip" onclick="askAIChat('วิเคราะห์ความเสี่ยงโครงการหน่อย')">วิเคราะห์ความเสี่ยงโครงการ</button>
+                    </div>
+                </div>
+            </div>
+            <div class="ai-chat-input-area">
+                <input type="text" id="aiChatInput" placeholder="พิมพ์คำถามของคุณที่นี่..." onkeydown="if(event.key === 'Enter') sendAIChatMessage()">
+                <button onclick="sendAIChatMessage()" aria-label="ส่งข้อความ"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <!-- Toast Notifications Container -->
+        <div id="toastContainer" class="toast-container"></div>
+
+    </main>
+
+    <script src="js/data.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/shader.js"></script>
+    <script src="js/effects.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker registered successfully!', reg))
+                    .catch(err => console.error('Service Worker registration failed:', err));
+            });
+        }
+    </script>
+</body>
+</html>
