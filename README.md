@@ -1,9 +1,31 @@
 # 🚀 TalentSphere AI Ecosystem
 
-**ระบบบริหารงานและพัฒนาบุคลากรขับเคลื่อนด้วย AI อัจฉริยะ**  
+**ระบบบริหารงานและพัฒนาบุคลากรขับเคลื่อนด้วย AI อัจฉริยะ (Client-Side PWA)**  
 *ผลงานส่งเข้าประกวด Hackathon Challenge: The "Living" App (48 Hours)*
 
 แอปพลิเคชันรูปแบบ Client-side Web Application เต็มรูปแบบที่ชุบชีวิตข้อมูลดิบ JSON ของบุคลากร คอร์สเรียน การทำงาน และการลงทะเบียนพัฒนาทักษะ ให้กลายเป็นระบบนิเวศการบริหารงานอัจฉริยะที่สามารถทำงานร่วมกันได้อย่างลงตัว ภายใต้ธีมการออกแบบกระจกฝ้า **Liquid Glass Theme** และพื้นหลังไฟฟ้าคลื่นทองระยิบระยับ
+
+---
+
+<p align="center">
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" />
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" />
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" />
+  <img src="https://img.shields.io/badge/PWA-5A0FC8?style=for-the-badge&logo=progressive-web-apps&logoColor=white" alt="PWA" />
+  <img src="https://img.shields.io/badge/WebGL-990000?style=for-the-badge&logo=webgl&logoColor=white" alt="WebGL" />
+  <img src="https://img.shields.io/badge/Gemini%20AI-8E75C2?style=for-the-badge&logo=google-gemini&logoColor=white" alt="Gemini AI" />
+</p>
+
+---
+
+## 📌 สารบัญ (Table of Contents)
+1. [🎯 แนวคิดและนวัตกรรมผลิตภัณฑ์ (Product Thinking)](#🎯-แนวคิดและนวัตกรรมผลิตภัณฑ์-product-thinking--innovation)
+2. [🏗️ สถาปัตยกรรมระบบ (Architecture & Flow)](#🏗️-สถาปัตยกรรมระบบ-architecture--flow)
+3. [✨ คุณสมบัติและฟีเจอร์หลัก (Core Features & MVP)](#✨-คุณสมบัติและฟีเจอร์หลัก-core-features--mvp)
+4. [🎁 โบนัสพิเศษ & Wow-Effects (Bonus Tracks)](#🎁-โบนัสพิเศษ-bonus-tracks---ครบถ้วน-10-คะแนนเต็ม)
+5. [🛠️ เทคโนโลยีที่ใช้ (Tech Stack)](#🛠️-เทคโนโลยีที่ใช้-tech-stack)
+6. [📂 โครงสร้างโฟลเดอร์ของโครงการ](#📂-โครงสร้างโฟลเดอร์ของโครงการ)
+7. [🚀 คู่มือการติดตั้งและเปิดใช้งาน (Setup Guide)](#🚀-คู่มือการติดตั้งและเปิดใช้งาน-setup--usage)
 
 ---
 
@@ -12,6 +34,38 @@
 *   **3-Month Skill Gap Analyzer**: คาดการณ์ช่องว่างทักษะล่วงหน้า 3 เดือน โดยการประมวลผลดึงข้อมูล Roadmap โปรเจกต์ในอนาคต (เช่น Mobile App Launch) มาสแกนหาข้อกำหนดทักษะที่ต้องการ เปรียบเทียบกับทักษะปัจจุบันของบุคลากร 15 คนในทีม เพื่อระบุจุดบกพร่องของทีมล่วงหน้า พร้อมแนะนำหลักสูตร LMS ที่เหมาะสมอุดรอยรั่วทักษะทันที
 *   **AI Agent**: คิดแผนเสนอโครงการย่อย (Sub-projects) 3 รายการเพื่อความสมดุลด้านกำลังคนและช่วยลดความเสี่ยงโครงการล่วงหน้า พร้อมปุ่มอนุมัติเพื่อบันทึกลงระบบและตารางงานทันที
 *   **AI Failover Router**: ป้องกันปัญหาระบบล่มด้วยสถาปัตยกรรมการจัดเส้นทาง AI ถึง 4 ชั้น (Gemini -> OpenRouter -> Groq -> Local Simulator) การันตีแอปใช้งานได้ 100% เสมอ
+
+---
+
+## 🏗️ สถาปัตยกรรมระบบ (Architecture & Flow)
+การเชื่อมโยงระบบการทำงานแบบออฟไลน์และโครงสร้างการบริหารจัดการด้วย AI ออกแบบในลักษณะปิดบนเครื่องของผู้ใช้ (Client-Side) ทั้งหมด:
+
+```mermaid
+graph TD
+    User([ผู้ใช้งาน]) -->|เข้าใช้งาน| Dashboard[TalentSphere Dashboard UI]
+    
+    subgraph Frontend_App [โครงสร้างส่วนหน้าบ้าน (Frontend)]
+        Dashboard -->|เมาส์เอฟเฟกต์ / 3D Tilt| Effects[js/effects.js - Interactions]
+        Dashboard -->|ระบบควบคุมตารางและแชท| App[js/app.js - Logic & Controllers]
+        App -->|บันทึกการเปลี่ยนแปลงจำลอง| Data[js/data.js - LocalStorage DB Loader]
+        App -->|พล็อตกราฟผลงาน| Charts[js/charts.js - Chart.js Config]
+        Dashboard -->|คลื่นไฟฟ้าสีทองเต็มจอ| Shader[js/shader.js - WebGL Shader]
+    end
+
+    subgraph PWA_Offline [ระบบออฟไลน์ (Offline-First)]
+        App -->|ลงทะเบียนระบบแคช| SW[sw.js - Service Worker]
+        SW -->|จัดเก็บทรัพยากรหลัก| Cache[(Browser Cache - HTML, CSS, JS, JSON)]
+        manifest[manifest.json] -->|แอปพลิเคชันสแตนด์อะโลน| OS[iOS / Android / Desktop OS]
+    end
+
+    subgraph AI_Ecosystem [การประมวลผล AI & Failover Routing]
+        App -->|ส่งคำร้องวิเคราะห์| Router{AI Failover Router}
+        Router -->|ชั้นที่ 1: ดีที่สุด| Gemini[Google Gemini 2.5 Flash]
+        Router -->|ชั้นที่ 2: สำรอง| OpenRouter[OpenRouter API]
+        Router -->|ชั้นที่ 3: ความไวสูง| Groq[Groq Llama 3.3 70B]
+        Router -->|ชั้นที่ 4: ออฟไลน์| Simulator[Local Rule-based Simulator]
+    end
+```
 
 ---
 
@@ -26,13 +80,8 @@
 *   **Message Panel**: แผงกล่องจดหมายเข้าล่าสุด แสดงข้อความอัปเดตงานจากนักพัฒนา (Developer) และผู้จัดการฝ่ายทรัพยากรบุคคล (HR Manager)
 *   *คุณสมบัติ:* ออกแบบในสไตล์กระจกฝ้าปรับแสงกึ่งใสตามธีมมืด/สว่างโดยอัตโนมัติ และปิดตัวเองอัตโนมัติเมื่อกดคลิกนอกพื้นที่
 
-### 2. ระบบนำทางและแจ้งเตือนด่วน (Topbar Interactive Dropdowns) (ใหม่!)
-*   **Notification Panel**: แผงแจ้งเตือนการเปลี่ยนสถานะของโครงการ ความไม่สอดคล้องของทักษะกับงาน (Skill Gaps) และการเรียนสำเร็จของพนักงาน
-*   **Message Panel**: แผงกล่องจดหมายเข้าล่าสุด แสดงข้อความอัปเดตงานจากนักพัฒนา (Developer) และผู้จัดการฝ่ายทรัพยากรบุคคล (HR Manager)
-*   *คุณสมบัติ:* ออกแบบในสไตล์กระจกฝ้าปรับแสงกึ่งใสตามธีมมืด/สว่างโดยอัตโนมัติ และปิดตัวเองอัตโนมัติเมื่อกดคลิกนอกพื้นที่
-
 ### 3. ตารางค้นหาและคัดกรองข้อมูล (List & Search & Filter)
-*   **ตารางงานแบบละเอียด**: แสดงชื่องาน, ผู้รับผิดชอบ, ฝ่าย, ระดับความสำคัญ, สถานะการทำ และแถบความคืบหน้า (Progress Bar)
+*   **ตารางงานแบบละเอียด**: แสดงชื่องาน, ผู้รับผิดชอบ, ฝ่าย, ระดับความสำคัญ, สถานะการทำงาน และแถบความคืบหน้า (Progress Bar)
 *   **ระบบการกรองหลายมิติ**: ค้นหางานด้วยพิมพ์ชื่องานหรือชื่อพนักงาน และตัวกรองคัดแยกตามสถานะของงานและฝ่ายทำงาน
 
 ### 4. หน้ารายละเอียดเชิงลึก (Detail Page Modal)
@@ -51,12 +100,10 @@
 *   **Live Ticker**: แถบอัปเดตกิจกรรมล่าสุดของระบบจำลอง (Activity Ticker) ค่อยๆ เลื่อนวิ่งด้านล่างตารางสรุป และหยุดนิ่งเมื่อเมาส์ชี้เพื่อให้อ่านได้สะดวก
 
 ### 📱 PWA & Offline-First (ใหม่!)
-*   **Installable**: แอปพลิเคชันผ่านเกณฑ์ PWA มาตรฐาน รองรับการติดตั้งแบบ Standalone ลงบนโทรศัพท์มือถือและเดสก์ท็อปผ่านไฟล์ [manifest.json](file:///d:/hackathon/ai_driven_ecosystem/manifest.json)
+*   **Installable**: แอปพลิเคชันผ่านเกณฑ์ PWA มาตรฐาน รองรับการติดตั้งแบบ Standalone ลงบนโทรศัพท์มือถือและเดสก์ท็อปผ่านไฟล์ [manifest.json](manifest.json)
 *   **Custom PWA Install Button**: ปุ่มติดตั้งแอปจำลอง PWA สีทองส่งคลื่นกะพริบเรืองแสง (`.pulse-glow`) บนแถบเมนูนำทาง ซึ่งจะปรากฏขึ้นมาเฉพาะเมื่อเบราว์เซอร์ตรวจสอบพบความเข้ากันได้
 *   **Wow-Effects Celebrations**: เมื่อกดติดตั้งแอปพลิเคชันเสร็จสิ้น หน้าจอจะโปรยกระดาษสีเฉลิมฉลอง (Confetti) พร้อมเปิดเสียงความยินดี (Chime Sound) และขึ้นกล่องแจ้งเตือนความสำเร็จทันที เพื่อความพึงพอใจสูงสุดของผู้ใช้
-*   **Custom PWA Install Button**: ปุ่มติดตั้งแอปจำลอง PWA สีทองส่งคลื่นกะพริบเรืองแสง (`.pulse-glow`) บนแถบเมนูนำทาง ซึ่งจะปรากฏขึ้นมาเฉพาะเมื่อเบราว์เซอร์ตรวจสอบพบความเข้ากันได้
-*   **Wow-Effects Celebrations**: เมื่อกดติดตั้งแอปพลิเคชันเสร็จสิ้น หน้าจอจะโปรยกระดาษสีเฉลิมฉลอง (Confetti) พร้อมเปิดเสียงความยินดี (Chime Sound) และขึ้นกล่องแจ้งเตือนความสำเร็จทันที เพื่อความพึงพอใจสูงสุดของผู้ใช้
-*   **Offline Cached**: ทำงานร่วมกับ Service Worker [sw.js](file:///d:/hackathon/ai_driven_ecosystem/sw.js) ในการแคชไฟล์ทั้งหมดของโครงการ (HTML, CSS, JS, SVG, JSON) ทำให้เข้าถึงข้อมูลและใช้งานได้ทันทีแม้จะขาดการเชื่อมต่ออินเทอร์เน็ต
+*   **Offline Cached**: ทำงานร่วมกับ Service Worker [sw.js](sw.js) ในการแคชไฟล์ทั้งหมดของโครงการ (HTML, CSS, JS, SVG, JSON) ทำให้เข้าถึงข้อมูลและใช้งานได้ทันทีแม้จะขาดการเชื่อมต่ออินเทอร์เน็ต
 
 ### 🎨 Premium UI/UX: Liquid Glass & Sparkle Trail
 *   **Liquid Glass Theme**: หน้าต่างกระจกฝ้าซ้อนทับกันอย่างโปร่งแสงงดงาม มีโหมดสว่างกระจกใสขาวพรีเมียมคู่ขนานไปกับโหมดมืดฝ้าเข้ม ล็อกสไตล์ให้สวยสอดคล้องลอยเด่นเหนือ WebGL Shader ด้านหลัง
