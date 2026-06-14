@@ -11,6 +11,7 @@ const fsSource = `
   precision highp float;
   uniform vec2 iResolution;
   uniform float iTime;
+  uniform float u_dark;
 
   const float overallSpeed = 0.25;
   const float gridSmoothWidth = 0.015;
@@ -72,12 +73,8 @@ const fsSource = `
     space.y += random(space.x * warpFrequency + iTime * warpSpeed) * warpAmplitude * (0.5 + horizontalFade);
     space.x += random(space.y * warpFrequency + iTime * warpSpeed + 2.0) * warpAmplitude * horizontalFade;
 
-    vec4 lines = vec4(0.0);
+    float lineIntensity = 0.0;
     
-    // Charcoal Dark Gray backgrounds to blend with --dark-gray banner
-    vec4 bgColor1 = vec4(0.06, 0.06, 0.06, 1.0);
-    vec4 bgColor2 = vec4(0.12, 0.12, 0.12, 1.0);
-
     for(int l = 0; l < 12; l++) {
       float normalizedLineIndex = float(l) / 12.0;
       float offsetTime = iTime * offsetSpeed;
@@ -92,14 +89,16 @@ const fsSource = `
       vec2 circlePosition = vec2(circleX, getPlasmaY(circleX, horizontalFade, offset));
       float circle = drawCircle(circlePosition, 0.01, space) * 3.0;
 
-      line = line + circle;
-      lines += line * lineColor * rand;
+      lineIntensity += (line + circle) * rand;
     }
 
-    fragColor = mix(bgColor1, bgColor2, uv.x);
-    fragColor *= verticalFade;
+    vec4 bgColor1 = mix(vec4(0.95, 0.95, 0.97, 1.0), vec4(0.06, 0.06, 0.06, 1.0), u_dark);
+    vec4 bgColor2 = mix(vec4(1.0, 1.0, 1.0, 1.0), vec4(0.12, 0.12, 0.12, 1.0), u_dark);
+
+    vec4 bg = mix(bgColor1, bgColor2, uv.x) * verticalFade;
+    // Blend gold lines on top of background
+    fragColor = mix(bg, lineColor, min(1.0, lineIntensity * 0.55));
     fragColor.a = 1.0;
-    fragColor += lines;
 
     gl_FragColor = fragColor;
   }
@@ -170,6 +169,7 @@ function initShaderBanner(canvasId) {
         uniformLocations: {
             resolution: gl.getUniformLocation(shaderProgram, 'iResolution'),
             time: gl.getUniformLocation(shaderProgram, 'iTime'),
+            dark: gl.getUniformLocation(shaderProgram, 'u_dark'),
         },
         positionBuffer: positionBuffer,
         startTime: Date.now()
@@ -210,6 +210,8 @@ function renderShaderBanners() {
         gl.useProgram(info.program);
         gl.uniform2f(info.uniformLocations.resolution, canvas.width, canvas.height);
         gl.uniform1f(info.uniformLocations.time, currentTime);
+        const isDark = document.body.classList.contains('dark-theme') ? 1.0 : 0.0;
+        gl.uniform1f(info.uniformLocations.dark, isDark);
 
         gl.bindBuffer(gl.ARRAY_BUFFER, info.positionBuffer);
         gl.vertexAttribPointer(info.attribLocations.vertexPosition, 2, gl.FLOAT, false, 0, 0);
