@@ -1,4 +1,4 @@
-# สถาปัตยกรรมระบบ (System Architecture) - AI-Driven Task & Learning Management Ecosystem
+# สถาปัตยกรรมระบบ (System Architecture) - TalentSphere
 
 เอกสารฉบับนี้อธิบายโครงสร้าง สถาปัตยกรรมปัญญาประดิษฐ์ และการไหลเวียนข้อมูลภายในระบบจัดการงานและพัฒนาทักษะ (Phase 2 Upgrade)
 
