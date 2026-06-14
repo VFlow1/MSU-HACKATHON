@@ -1871,7 +1871,7 @@ function buildSystemContextPrompt() {
     const completedCoursesCount = coursesData.filter(c => c.status === 'completed' || c.progress === 100).length;
     const totalCoursesCount = coursesData.length;
 
-    return `คุณคือ "AI Project Manager Assistant" ผู้ช่วยอัจฉริยะในบอร์ดบริการจัดการงานและพัฒนาทักษะ (AI-Driven Task & Learning Management Ecosystem) ขององค์กร
+    return `คุณคือ "AI Project Manager Assistant" ผู้ช่วยอัจฉริยะในบอร์ดบริการจัดการงานและพัฒนาทักษะ (TalentSphere) ขององค์กร
 นี่คือข้อมูลจริงในระบบขณะนี้:
 - จำนวนงานทั้งหมด: ${totalTasks} งาน (เสร็จสิ้น: ${completedTasks}, กำลังทำ: ${progressTasks}, รอเริ่ม: ${pendingTasks}, ติดขัด: ${blockedTasks})
 - งานที่ติดขัด (Blocked):\n${blockedListStr}
