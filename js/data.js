@@ -8,9 +8,24 @@ const GROQ_MODEL = "llama-3.3-70b-versatile";
 let OPENROUTER_API_KEY = ""; // คีย์สำรอง ใช้กรณีโมเดลหลักล่ม
 const OPENROUTER_MODEL = "openrouter/free"; // ใช้เราเตอร์ฟรีอัตโนมัติของ OpenRouter
 
-// ฟังก์ชันโหลดคอนฟิกจากไฟล์ .env แบบไดนามิกบนฝั่งไคลเอนต์
+// ฟังก์ชันโหลดคอนฟิกจากไฟล์ .env หรือ Vercel API แบบไดนามิกบนฝั่งไคลเอนต์
 async function loadEnvConfig() {
     try {
+        console.log("Checking environment configuration from Vercel config API...");
+        try {
+            const apiRes = await fetch('/api/config');
+            if (apiRes.ok) {
+                const config = await apiRes.json();
+                if (config.GEMINI_API_KEY) GEMINI_API_KEY = config.GEMINI_API_KEY;
+                if (config.GROQ_API_KEY) GROQ_API_KEY = config.GROQ_API_KEY;
+                if (config.OPENROUTER_API_KEY) OPENROUTER_API_KEY = config.OPENROUTER_API_KEY;
+                console.log("Configuration loaded from Vercel Serverless environment.");
+                return;
+            }
+        } catch (apiErr) {
+            console.log("Vercel config API not active. Trying local .env...");
+        }
+
         console.log("Loading configuration from .env...");
         const response = await fetch('/.env');
         if (!response.ok) {
