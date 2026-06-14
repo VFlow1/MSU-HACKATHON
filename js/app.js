@@ -1376,7 +1376,7 @@ function checkGeminiApiStatus() {
             geminiBox.style.background = 'rgba(76, 175, 80, 0.1)';
             geminiBox.style.borderColor = 'var(--success)';
             geminiBox.style.color = 'var(--success)';
-            geminiBox.innerHTML = `<i class="fas fa-check-circle" style="color: var(--success);"></i> พร้อมใช้งาน (สมองหลัก: <code>${GEMINI_API_KEY.slice(0, 6)}...${GEMINI_API_KEY.slice(-4)}</code>)`;
+            geminiBox.innerHTML = `<i class="fas fa-check-circle" style="color: var(--success);"></i> พร้อมใช้งาน (เชื่อมต่อเรียบร้อยแล้ว)`;
         } else {
             geminiBox.style.background = 'rgba(244, 67, 54, 0.1)';
             geminiBox.style.borderColor = 'var(--danger)';
@@ -1390,7 +1390,7 @@ function checkGeminiApiStatus() {
             groqBox.style.background = 'rgba(76, 175, 80, 0.1)';
             groqBox.style.borderColor = 'var(--success)';
             groqBox.style.color = 'var(--success)';
-            groqBox.innerHTML = `<i class="fas fa-check-circle" style="color: var(--success);"></i> พร้อมใช้งาน (แชทบอร์ดหลัก: <code>${GROQ_API_KEY.slice(0, 6)}...${GROQ_API_KEY.slice(-4)}</code>)`;
+            groqBox.innerHTML = `<i class="fas fa-check-circle" style="color: var(--success);"></i> พร้อมใช้งาน (เชื่อมต่อเรียบร้อยแล้ว)`;
         } else {
             groqBox.style.background = 'rgba(244, 67, 54, 0.1)';
             groqBox.style.borderColor = 'var(--danger)';
@@ -1404,7 +1404,7 @@ function checkGeminiApiStatus() {
             openRouterBox.style.background = 'rgba(76, 175, 80, 0.1)';
             openRouterBox.style.borderColor = 'var(--success)';
             openRouterBox.style.color = 'var(--success)';
-            openRouterBox.innerHTML = `<i class="fas fa-check-circle" style="color: var(--success);"></i> พร้อมใช้งาน (สำรองฟรี: <code>${OPENROUTER_API_KEY.slice(0, 6)}...${OPENROUTER_API_KEY.slice(-4)}</code>)`;
+            openRouterBox.innerHTML = `<i class="fas fa-check-circle" style="color: var(--success);"></i> พร้อมใช้งาน (เชื่อมต่อเรียบร้อยแล้ว)`;
         } else {
             openRouterBox.style.background = 'rgba(244, 67, 54, 0.1)';
             openRouterBox.style.borderColor = 'var(--danger)';
