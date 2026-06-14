@@ -1226,6 +1226,87 @@ function generateAIResponse(query) {
         return `ขณะนี้ในระบบยังไม่มีงานใดที่มีสถานะเสร็จสิ้นครับ`;
     }
     
+    // Check if asking about skill gaps in the next 3 months / roadmap
+    if (q.includes('ขาดทักษะ') || q.includes('3 เดือน') || q.includes('roadmap') || q.includes('ทักษะที่ขาด')) {
+        const now = new Date();
+        const currentDate = (now.getFullYear() >= 2026) ? now : new Date("2026-06-15");
+        const threeMonthsLater = new Date(currentDate);
+        threeMonthsLater.setMonth(currentDate.getMonth() + 3);
+
+        const upcoming = (typeof projectsData !== 'undefined' ? projectsData : [])
+            .filter(p => {
+                const deadlineDate = new Date(p.deadline);
+                return deadlineDate >= currentDate && deadlineDate <= threeMonthsLater;
+            });
+
+        let needsMobile = upcoming.some(p => p.name.toLowerCase().includes('mobile'));
+        let needsApi = upcoming.some(p => p.name.toLowerCase().includes('api'));
+        let needsSmp = upcoming.some(p => p.name.toLowerCase().includes('social') || p.name.toLowerCase().includes('media'));
+        let needsLegal = upcoming.some(p => p.name.toLowerCase().includes('legal'));
+
+        const teamSkills = employeesData.map(e => e.skills.toLowerCase()).join(', ');
+        
+        let gapAnalysis = `<strong>วิเคราะห์ช่องว่างทักษะ (Skill Gap) ในอีก 3 เดือนข้างหน้า</strong><br>`;
+        gapAnalysis += `จาก Roadmap งานในช่วง 3 เดือนข้างหน้า (${formatDateThai(currentDate.toISOString())} - ${formatDateThai(threeMonthsLater.toISOString())}) มีโปรเจกต์สำคัญที่กำลังจะเข้ามาดังนี้ครับ:<br><ul style="margin-left: 20px; margin-top: 8px;">`;
+        
+        upcoming.forEach(p => {
+            gapAnalysis += `<li>โปรเจกต์ <strong>"${p.name}"</strong> (กำหนดส่ง: ${formatDateThai(p.deadline)})</li>`;
+        });
+        gapAnalysis += `</ul><br>`;
+
+        gapAnalysis += `<strong>เปรียบเทียบความต้องการกับทักษะปัจจุบันของทีม:</strong><br><ul style="margin-left: 20px; margin-top: 8px;">`;
+        
+        let recommendedCourses = [];
+        
+        if (needsMobile) {
+            const hasMobile = teamSkills.includes('android') || teamSkills.includes('ios') || teamSkills.includes('react native') || teamSkills.includes('flutter');
+            gapAnalysis += `<li><strong>ทักษะพัฒนาโมบายแอป:</strong> `;
+            if (!hasMobile) {
+                gapAnalysis += `<span style="color: var(--danger); font-weight: 700;">ขาดแคลนวิกฤต!</span> ทีมยังไม่มีผู้เชี่ยวชาญด้าน iOS/Android/React Native โดยตรงสำหรับโปรเจกต์ Mobile App Launch</li>`;
+                recommendedCourses.push('Fundamentals Mobile App Dev');
+            } else {
+                gapAnalysis += `<span style="color: var(--success);">พร้อมใช้งาน</span> มีพนักงานที่มีพื้นฐานด้าน Mobile App อยู่ในทีม</li>`;
+            }
+        }
+        
+        if (needsApi) {
+            const hasApi = teamSkills.includes('node') || teamSkills.includes('api') || teamSkills.includes('backend');
+            gapAnalysis += `<li><strong>ทักษะการเชื่อมต่อ API & Backend:</strong> `;
+            if (!hasApi) {
+                gapAnalysis += `<span style="color: var(--danger); font-weight: 700;">ขาดแคลน!</span> สำหรับโปรเจกต์ API Integration</li>`;
+                recommendedCourses.push('Advanced React JS');
+            } else {
+                gapAnalysis += `<span style="color: var(--success);">พร้อมใช้งาน</span> มีนักพัฒนา Backend คอยดูแลในส่วนนี้</li>`;
+            }
+        }
+
+        if (needsLegal) {
+            const hasLegal = teamSkills.includes('legal') || teamSkills.includes('compliance');
+            gapAnalysis += `<li><strong>ทักษะด้าน Legal Compliance:</strong> `;
+            if (!hasLegal) {
+                gapAnalysis += `<span style="color: var(--warning); font-weight: 700;">ขาดแคลน!</span> สำหรับโปรเจกต์ Legal Compliance Check</li>`;
+                recommendedCourses.push('Crash Course Project Management');
+            } else {
+                gapAnalysis += `<span style="color: var(--success);">พร้อมใช้งาน</span></li>`;
+            }
+        }
+        
+        gapAnalysis += `</ul><br>`;
+
+        if (recommendedCourses.length > 0) {
+            gapAnalysis += `<strong>💡 แนวทางพัฒนาบุคลากร (Upskilling Recommendations):</strong><br>`;
+            gapAnalysis += `แนะนำให้มอบหมายพนักงานในทีมเข้าเรียนคอร์สเรียนออนไลน์ LMS ต่อไปนี้ทันทีเพื่ออุดรอยรั่วทักษะครับ:<br><ul style="margin-left: 20px; margin-top: 8px;">`;
+            recommendedCourses.forEach(cName => {
+                gapAnalysis += `<li>คอร์ส <strong>"${cName}"</strong></li>`;
+            });
+            gapAnalysis += `</ul>`;
+        } else {
+            gapAnalysis += `ทีมงานปัจจุบันมีทักษะครอบคลุมและเพียงพอต่อความต้องการของ Roadmap ในช่วง 3 เดือนข้างหน้าทั้งหมดแล้วครับ!`;
+        }
+
+        return gapAnalysis;
+    }
+    
     if (q.includes('งานเยอะ') || q.includes('งานสุด') || q.includes('ภาระ') || q.includes('งานมาก')) {
         let maxTasks = -1;
         let empList = [];
@@ -1316,6 +1397,7 @@ function generateAIResponse(query) {
             <button class="suggestion-chip" onclick="askAIChat('ใครมีงานเยอะที่สุด?')">ใครมีงานเยอะที่สุด?</button>
             <button class="suggestion-chip" onclick="askAIChat('มีงานอะไรบ้างที่ติดขัดอยู่?')">งานติดขัด (Blocked)</button>
             <button class="suggestion-chip" onclick="askAIChat('คะแนนประสิทธิภาพพนักงาน')">ประสิทธิภาพพนักงานสูงสุด</button>
+            <button class="suggestion-chip" onclick="askAIChat('วิเคราะห์ทักษะที่ขาดใน 3 เดือนข้างหน้า')">วิเคราะห์ทักษะที่ขาดใน 3 เดือน</button>
         </div>
     `;
 }
@@ -1917,6 +1999,23 @@ function buildSystemContextPrompt() {
     const pendingTasks = tasksData.filter(t => t.status === 'pending').length;
     const criticalTasks = tasksData.filter(t => t.priority === 'critical').length;
     
+    // Calculate upcoming projects in next 3 months (from 2026-06-15 to 2026-09-15 as baseline)
+    const now = new Date();
+    const currentDate = (now.getFullYear() >= 2026) ? now : new Date("2026-06-15");
+    const threeMonthsLater = new Date(currentDate);
+    threeMonthsLater.setMonth(currentDate.getMonth() + 3);
+
+    const upcomingProjects = (typeof projectsData !== 'undefined' ? projectsData : [])
+        .filter(p => {
+            const deadlineDate = new Date(p.deadline);
+            return deadlineDate >= currentDate && deadlineDate <= threeMonthsLater;
+        });
+
+    let upcomingProjectsStr = upcomingProjects
+        .map(p => `- โปรเจกต์: "${p.name}" (กำหนดส่ง: ${formatDateThai(p.deadline)})`)
+        .join('\n');
+    if (!upcomingProjectsStr) upcomingProjectsStr = "ไม่มีโปรเจกต์ใหม่ใน 3 เดือนข้างหน้า";
+
     // List of completed tasks
     let completedListStr = tasksData.filter(t => t.status === 'completed')
         .map(t => `- งานที่เสร็จแล้ว: "${t.name}" (ผู้รับผิดชอบ: ${t.assignee}, ระดับความสำคัญ: ${t.priority})`)
@@ -1972,8 +2071,11 @@ function buildSystemContextPrompt() {
 - สรุป: เรียนจบแล้ว ${completedCoursesCount} คอร์ส จากคอร์สทั้งหมด ${totalCoursesCount} คอร์ส
 - รายชื่อคอร์สทั้งหมด:\n${coursesStr}
 
+8. รายการโปรเจกต์แผนงานที่กำลังจะเข้ามาในอีก 3 เดือนข้างหน้า (Roadmap):\n${upcomingProjectsStr}
+
 จงวิเคราะห์และตอบคำถามของผู้ใช้อย่างฉลาด มีประโยชน์ เป็นกันเอง มีความกระตือรือร้นเหมือนที่ปรึกษามืออาชีพ และตอบกลับเป็นภาษาไทยเท่านั้น 
 หากผู้ใช้ถามว่ามีงานอะไรเสร็จ หรืออยากรู้เรื่องเกี่ยวกับงานคอร์ส ให้เจาะจงรายละเอียด ชื่อผู้ทำ/ผู้เรียน และข้อมูลวิเคราะห์ตามจริงอย่างละเอียด 
+หากผู้ใช้ถามเกี่ยวกับการวิเคราะห์ทักษะที่ขาดแคลนในอีก 3 เดือน (Skill Gap Analysis) ให้วิเคราะห์เปรียบเทียบข้อกำหนดทักษะที่ควรจะมีสำหรับแต่ละโปรเจกต์ในแผนงาน Roadmap (เช่น Mobile App Launch ต้องการทักษะพัฒนาโมบายแอป, API Integration ต้องการทักษะ API/Backend, SEO Improvement ต้องการทักษะ SEO) กับทักษะปัจจุบันของพนักงานในทีม และระบุว่าทักษะไหนขาดแคลน (เช่น ขาดคนทำ Mobile App) จากนั้นให้แนะนำคอร์สเรียน LMS ที่ตรงกัน เช่น "Fundamentals Mobile App Dev" เพื่อเสริมทักษะพนักงาน
 และถ้างานไหนมีปัญหา ให้แนะนำคนที่มีทักษะตรงจากการเรียน LMS มาทดแทนช่วยแก้ไขงานอย่างสร้างสรรค์`;
 }
 
