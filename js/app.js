@@ -1071,11 +1071,33 @@ function showToast(message, type = 'info') {
 
 // ===== THEME TOGGLE LOGIC =====
 function toggleTheme() {
-    // Theme switching is disabled. The system runs permanently in premium dark glass theme.
+    const isDark = document.body.classList.toggle('dark-theme');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    updateThemeIcon();
+    showToast(isDark ? 'เปิดใช้งานโหมดมืดแล้ว' : 'เปิดใช้งานโหมดสว่างแล้ว');
+}
+
+function updateThemeIcon() {
+    const themeIcon = document.getElementById('themeToggleIcon');
+    const themeBtn = document.getElementById('themeToggleBtn');
+    if (themeIcon) {
+        const isDark = document.body.classList.contains('dark-theme');
+        themeIcon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    }
+    if (themeBtn) {
+        const isDark = document.body.classList.contains('dark-theme');
+        themeBtn.setAttribute('data-tooltip', isDark ? 'สลับเป็นโหมดสว่าง' : 'สลับเป็นโหมดมืด');
+    }
 }
 
 function initTheme() {
-    document.body.classList.add('dark-theme');
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        document.body.classList.remove('dark-theme');
+    } else {
+        document.body.classList.add('dark-theme');
+    }
+    updateThemeIcon();
 }
 
 // ===== AI CHAT ASSISTANT LOGIC =====
