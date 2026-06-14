@@ -1,7 +1,7 @@
 @echo off
-title AI-Driven Talent Dashboard Server
+title TalentSphere Server
 echo ========================================================
-echo   AI-Driven Task & Learning Management Ecosystem Server
+echo   TalentSphere Server
 echo ========================================================
 echo.
 echo [1/2] กำลังเปิดเบราว์เซอร์ไปที่ http://localhost:3000...
