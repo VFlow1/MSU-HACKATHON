@@ -1627,7 +1627,7 @@ body.dark-theme .ticker-title {
     gap: 50px;
     position: absolute;
     white-space: nowrap;
-    animation: tickerScroll 45s linear infinite;
+    animation: tickerScroll 75s linear infinite;
     padding-left: 100%;
 }
 .ticker-items:hover {
