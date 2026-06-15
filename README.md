@@ -21,7 +21,7 @@
 ## 📌 สารบัญ (Table of Contents)
 1. [🎯 แนวคิดและนวัตกรรมผลิตภัณฑ์ (Product Thinking)](#🎯-แนวคิดและนวัตกรรมผลิตภัณฑ์-product-thinking--innovation)
 2. [🧠 บทบาทของ AI และการยกระดับระบบ (AI Impact & Comparison)](#🧠-บทบาทของ-ai-และการยกระดับระบบ-ai-impact--comparison)
-3. [🏗️ สถาปัตยกรรมระบบ (Architecture & Flow)](#🏗️-สถาปัตยกรรมระบบ-architecture--flow)
+3. [🏗️ สถาปัตยกรรมระบบ (Architecture & Flow)](#%EF%B8%8F-สถาปัตยกรรมระบบ-architecture--flow)
 4. [✨ คุณสมบัติและฟีเจอร์หลัก (Core Features & MVP)](#✨-คุณสมบัติและฟีเจอร์หลัก-core-features--mvp)
 5. [🎁 ฟีเจอร์เพิ่มเติม & Wow-Effects](#🎁-ฟีเจอร์เพิ่มเติม--wow-effects)
 6. [🛠️ เทคโนโลยีที่ใช้ (Tech Stack)](#🛠️-เทคโนโลยีที่ใช้-tech-stack)
@@ -55,28 +55,28 @@
 
 ```mermaid
 graph TD
-    User([ผู้ใช้งาน]) -->|เข้าใช้งาน| Dashboard[TalentSphere Dashboard UI]
+    User(["ผู้ใช้งาน"]) -->|เข้าใช้งาน| Dashboard["TalentSphere Dashboard UI"]
     
-    subgraph Frontend_App [โครงสร้างส่วนหน้าบ้าน (Frontend)]
-        Dashboard -->|เมาส์เอฟเฟกต์ / 3D Tilt| Effects[js/effects.js - Interactions]
-        Dashboard -->|ระบบควบคุมตารางและแชท| App[js/app.js - Logic & Controllers]
-        App -->|บันทึกการเปลี่ยนแปลงจำลอง| Data[js/data.js - LocalStorage DB Loader]
-        App -->|พล็อตกราฟผลงาน| Charts[js/charts.js - Chart.js Config]
-        Dashboard -->|คลื่นไฟฟ้าสีทองเต็มจอ| Shader[js/shader.js - WebGL Shader]
+    subgraph Frontend_App ["โครงสร้างส่วนหน้าบ้าน (Frontend)"]
+        Dashboard -->|เมาส์เอฟเฟกต์ / 3D Tilt| Effects["js/effects.js - Interactions"]
+        Dashboard -->|ระบบควบคุมตารางและแชท| App["js/app.js - Logic & Controllers"]
+        App -->|บันทึกการเปลี่ยนแปลงจำลอง| Data["js/data.js - LocalStorage DB Loader"]
+        App -->|พล็อตกราฟผลงาน| Charts["js/charts.js - Chart.js Config"]
+        Dashboard -->|คลื่นไฟฟ้าสีทองเต็มจอ| Shader["js/shader.js - WebGL Shader"]
     end
 
-    subgraph PWA_Offline [ระบบออฟไลน์ (Offline-First)]
-        App -->|ลงทะเบียนระบบแคช| SW[sw.js - Service Worker]
-        SW -->|จัดเก็บทรัพยากรหลัก| Cache[(Browser Cache - HTML, CSS, JS, JSON)]
-        manifest[manifest.json] -->|แอปพลิเคชันสแตนด์อะโลน| OS[iOS / Android / Desktop OS]
+    subgraph PWA_Offline ["ระบบออฟไลน์ (Offline-First)"]
+        App -->|ลงทะเบียนระบบแคช| SW["sw.js - Service Worker"]
+        SW -->|จัดเก็บทรัพยากรหลัก| Cache[("Browser Cache - HTML, CSS, JS, JSON")]
+        manifest["manifest.json"] -->|แอปพลิเคชันสแตนด์อะโลน| OS["iOS / Android / Desktop OS"]
     end
 
-    subgraph AI_Ecosystem [การประมวลผล AI & Failover Routing]
-        App -->|ส่งคำร้องวิเคราะห์| Router{AI Failover Router}
-        Router -->|ชั้นที่ 1: ดีที่สุด| Gemini[Google Gemini 2.5 Flash]
-        Router -->|ชั้นที่ 2: สำรอง| OpenRouter[OpenRouter API]
-        Router -->|ชั้นที่ 3: ความไวสูง| Groq[Groq Llama 3.3 70B]
-        Router -->|ชั้นที่ 4: ออฟไลน์| Simulator[Local Rule-based Simulator]
+    subgraph AI_Ecosystem ["การประมวลผล AI & Failover Routing"]
+        App -->|ส่งคำร้องวิเคราะห์| Router{"AI Failover Router"}
+        Router -->|ชั้นที่ 1: ดีที่สุด| Gemini["Google Gemini 2.5 Flash"]
+        Router -->|ชั้นที่ 2: สำรอง| OpenRouter["OpenRouter API"]
+        Router -->|ชั้นที่ 3: ความไวสูง| Groq["Groq Llama 3.3 70B"]
+        Router -->|ชั้นที่ 4: ออฟไลน์| Simulator["Local Rule-based Simulator"]
     end
 ```
 
